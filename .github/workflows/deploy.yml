@@ -47,7 +47,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: justuseapp.jar
-          path: backend/target/app.jar
+          path: backend/target/justuseapp.jar
 
 
   deploy-heroku:
