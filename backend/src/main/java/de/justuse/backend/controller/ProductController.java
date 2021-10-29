@@ -1,6 +1,7 @@
 package de.justuse.backend.controller;
 
 import de.justuse.backend.model.Product;
+import de.justuse.backend.model.ProductBuilder;
 import de.justuse.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,14 @@ public class ProductController {
     @PostMapping
     public Product addProductToDB(@RequestBody Product product){
 
-        return productService.addProduct(product);
+        Product testProduct = new ProductBuilder(product.getId(), product.getMAX_RENTAL_CYCLE())
+                .setTitle("Bike")
+                .setDescription("Mega Bike")
+                .setAmount(6)
+                .setPrice(55.99D)
+                .build();
+
+        return productService.addProduct(testProduct);
     }
 
 

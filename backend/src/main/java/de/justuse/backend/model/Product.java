@@ -16,6 +16,5 @@ public class Product {
     private final int MAX_RENTAL_CYCLE;
     private Location location;
     private double price;
-    private boolean isFavorite;
 
 }
