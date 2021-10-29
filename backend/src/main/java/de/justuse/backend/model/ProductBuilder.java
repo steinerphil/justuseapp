@@ -1,6 +1,7 @@
 package de.justuse.backend.model;
 
 import de.justuse.backend.enums.Location;
+import lombok.Builder;
 
 public class ProductBuilder {
 
@@ -12,6 +13,7 @@ public class ProductBuilder {
     private final int MAX_RENTAL_CYCLE;
     private Location location;
     private double price;
+
 
     public ProductBuilder(String id, int MAX_RENTAL_CYCLE) {
         this.id = id;
