@@ -5,6 +5,8 @@ import de.justuse.backend.repository.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -20,4 +22,7 @@ public class ProductService {
       return productRepo.save(product);
     }
 
+    public List<Product> getProducts() {
+       return productRepo.findAll();
+    }
 }
