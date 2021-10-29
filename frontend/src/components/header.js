@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 function Header() {
     return (
@@ -12,7 +12,6 @@ export default Header
 
 const HeaderContainer = styled.section`
   background-color: #DDDDDD;
-  float: left;
   height: 75px;
   width: 100vw;
 `
