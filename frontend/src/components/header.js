@@ -15,7 +15,6 @@ export default Header
 const HeaderContainer = styled.section`
 background-color: #30475E;
 height: 75px;
-width: 100vw;
 display: flex;
 align-items: center;
 `
