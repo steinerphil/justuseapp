@@ -1,6 +1,6 @@
 import phone from "../components/images/empty_phone.png"
 import styled from "styled-components/macro";
-import {Box, Paper} from "@mui/material";
+import {Paper} from "@mui/material";
 import Filter1Icon from '@mui/icons-material/Filter1';
 import Filter2Icon from '@mui/icons-material/Filter2';
 import Filter3Icon from '@mui/icons-material/Filter3';
