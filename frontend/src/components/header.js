@@ -6,7 +6,7 @@ function Header() {
     return (
         <HeaderContainer>
             <Logo src={logo} alt="logo"/>
-            <TestButton variant="outlined">Login</TestButton>
+            <LoginButton variant="outlined">Login</LoginButton>
         </HeaderContainer>
 )
 }
@@ -21,22 +21,36 @@ align-items: center;
 `
 
 const Logo = styled.img`
-margin-left: 1.5%;
-width: auto;
-height: 50%
+  @media(min-width: 260px) {
+    margin-left: 1.5%;
+    width: auto;
+    height: 50%
+  }
+  @media(max-width: 259px){
+    visibility: hidden;
+    position: absolute;
+  }
 
 `
 
-const TestButton = styled(Button)`
-&&{
-  color: #DDDDDD;
-  border-color: #DDDDDD;
-  position: absolute;
-  right: 1.3%;
+const LoginButton = styled(Button)`
+  &&{
+
+    color: #F05454;
+    border-color: #F05454;
 
   :hover{
-    border-color: #F05454;
-    color: #F05454;
+    border-color: #DDDDDD;
+    color: #DDDDDD;
+  }
+  
+  @media(min-width: 260px) {
+    position: absolute;
+    right: 1.3%;
+  }
+  
+  @media(max-width: 259px){
+    margin: auto;
   }
 }
   
