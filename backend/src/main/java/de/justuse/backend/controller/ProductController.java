@@ -1,5 +1,6 @@
 package de.justuse.backend.controller;
 
+import de.justuse.backend.enums.Location;
 import de.justuse.backend.model.Product;
 import de.justuse.backend.model.ProductBuilder;
 import de.justuse.backend.service.ProductService;
@@ -44,6 +45,11 @@ public class ProductController {
         } else {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Trying to add new product with MAX_RENTAL_CYCLE = 0. MAX_RENTAL_CYCLE can't be 0");
         }
+    }
+
+    @GetMapping("locations")
+    public Location[] getLocations(){
+        return Location.values();
     }
 
 
