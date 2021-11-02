@@ -153,16 +153,12 @@ const PSecond = styled.p`
     margin-left: 0;
     margin-right: 0;
   }
-
 `
 
 const PThird = styled.p`
   font-size: 1.2rem;
   line-height: 1.5rem;
   font-weight: 400;
-
-
-
 `
 
 const Paperrow = styled.div`
