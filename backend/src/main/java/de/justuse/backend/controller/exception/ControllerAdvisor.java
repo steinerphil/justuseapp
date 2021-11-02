@@ -1,6 +1,8 @@
 package de.justuse.backend.controller.exception;
 
+import de.justuse.backend.exceptions.InvalidObjectException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +22,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
 
+    }
+
+    @ExceptionHandler(InvalidObjectException.class)
+    public ResponseEntity<ApiError> handleInvalidObjectException(InvalidObjectException e){
+        log.error("Invalid Object Exception was thrown", e);
+        ApiError apiError = new ApiError("given object is not valid", e.getMessage());
+         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
 }

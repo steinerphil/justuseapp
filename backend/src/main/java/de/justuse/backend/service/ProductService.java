@@ -1,5 +1,6 @@
 package de.justuse.backend.service;
 
+import de.justuse.backend.exceptions.InvalidObjectException;
 import de.justuse.backend.model.Product;
 import de.justuse.backend.repository.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,11 @@ public class ProductService {
     }
 
 
-    public Product addProduct(Product product){
-      return productRepo.save(product);
+    public Product addProduct(Product product) throws InvalidObjectException {
+        if(product.getTitle() == null || product.getDescription() == null || product.getPrice()==0){
+            throw new InvalidObjectException("product is not valid, please check title, description and price");
+        }
+        return productRepo.save(product);
     }
 
     public List<Product> getProducts() {

@@ -1,6 +1,7 @@
 package de.justuse.backend.controller;
 
 import de.justuse.backend.enums.Location;
+import de.justuse.backend.exceptions.InvalidObjectException;
 import de.justuse.backend.model.Product;
 import de.justuse.backend.model.ProductBuilder;
 import de.justuse.backend.service.ProductService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -31,10 +33,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProductToDB(@RequestBody Product product){
+    public Product addProductToDB(@RequestBody Product product) throws InvalidObjectException {
 
         if(product.getMAX_RENTAL_CYCLE() != 0){
-            Product testProduct = new ProductBuilder(null, product.getMAX_RENTAL_CYCLE())
+           Product testProduct = new ProductBuilder(null, product.getMAX_RENTAL_CYCLE())
                     .setTitle(product.getTitle())
                     .setDescription(product.getDescription())
                     .setAmount(product.getAmount())
