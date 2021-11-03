@@ -5,17 +5,22 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Button from "@mui/material/Button";
 import styled from "styled-components/macro";
+import {AuthContext} from "../context/AuthProvider";
 
 export default function Login() {
+
+    const {login} = useContext(AuthContext)
 
     const [values, setValues] = useState({
         username: '',
         password: '',
         showPassword: false,
     });
+
+
 
     const handleChange = (prop) => (event) => {
         setValues({...values, [prop]: event.target.value});
@@ -33,23 +38,24 @@ export default function Login() {
     };
 
     function handleSubmit() {
-        console.log(values)
+        const credentials = {username: values.username, password: values.password}
+        login(credentials)
     }
 
     return (
         <>
                 <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-username">Username</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-username">Benutzername</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-username"
                         value={values.username}
                         onChange={handleChange('username')}
-                        label="Username"
+                        label="Benutzername"
                     />
                 </FormControl>
 
                 <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-password">Passwort</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
@@ -67,7 +73,7 @@ export default function Login() {
                                 </IconButton>
                             </InputAdornment>
                         }
-                        label="Password"
+                        label="Passwort"
                     />
                 </FormControl>
                 <SubmitButton variant="contained" onClick={handleSubmit}>Anmelden</SubmitButton>

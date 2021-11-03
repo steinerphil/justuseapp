@@ -1,13 +1,16 @@
 import styled from "styled-components/macro";
 import logo from "../components/images/longsmallwhitepransp.png"
 import Button from '@mui/material/Button';
+import {useHistory} from "react-router-dom";
 
 function Header() {
 
+    const history = useHistory()
+
     return (
         <HeaderContainer>
-            <Logo src={logo} onClick={() => window.open("/", "_blank")} alt="logo"/>
-            <LoginButton variant="outlined">Login</LoginButton>
+            <Logo src={logo} onClick={() => history.push("/")} alt="logo"/>
+            <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>
         </HeaderContainer>
     )
 }
