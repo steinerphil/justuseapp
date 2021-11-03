@@ -1,6 +1,7 @@
 package de.justuse.backend.controller;
 
 import de.justuse.backend.enums.Location;
+import de.justuse.backend.exceptions.InvalidObjectException;
 import de.justuse.backend.model.Product;
 import de.justuse.backend.model.ProductBuilder;
 import de.justuse.backend.service.ProductService;
@@ -31,17 +32,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProductToDB(@RequestBody Product product){
+    public Product addProductToDB(@RequestBody Product product) throws InvalidObjectException {
 
         if(product.getMAX_RENTAL_CYCLE() != 0){
-            Product testProduct = new ProductBuilder(null, product.getMAX_RENTAL_CYCLE())
-                    .setTitle(product.getTitle())
-                    .setDescription(product.getDescription())
-                    .setAmount(product.getAmount())
-                    .setPrice(product.getPrice())
-                    .setLocation(product.getLocation())
-                    .build();
-            return productService.addProduct(testProduct);
+            return productService.addProduct(product);
         } else {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Trying to add new product with MAX_RENTAL_CYCLE = 0. MAX_RENTAL_CYCLE can't be 0");
         }
