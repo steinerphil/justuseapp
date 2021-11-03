@@ -1,6 +1,5 @@
 package de.justuse.backend.security.filter;
 
-import de.justuse.backend.security.model.AppUser;
 import de.justuse.backend.security.service.AppUserDetailService;
 import de.justuse.backend.security.service.JwtUtilsService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
-import java.util.List;
 
 @Component
 @Slf4j
