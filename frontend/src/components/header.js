@@ -31,8 +31,7 @@ const Logo = styled.img`
     height: 50%
   }
   @media (max-width: 259px) {
-    visibility: hidden;
-    position: absolute;
+    display: none;
   }
 
 `

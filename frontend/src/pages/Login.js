@@ -9,6 +9,8 @@ import {useContext, useState} from "react";
 import Button from "@mui/material/Button";
 import styled from "styled-components/macro";
 import {AuthContext} from "../context/AuthProvider";
+import GithubButton from 'react-github-login-button';
+import GoogleButton from 'react-google-button'
 
 export default function Login() {
 
@@ -39,6 +41,15 @@ export default function Login() {
     function handleSubmit() {
         const credentials = {username: values.username, password: values.password}
         login(credentials)
+    }
+
+    function loginWithGithub() {
+        console.log("Github login button clicked")
+    }
+
+
+    function loginWithGoogle() {
+        console.log('Google login button clicked')
     }
 
     return (
@@ -77,6 +88,10 @@ export default function Login() {
                 />
             </StyledFormControl>
             <SubmitButton variant="contained" onClick={handleSubmit}>Anmelden</SubmitButton>
+            <OAuthLogins>
+                <GithubButton style={{width: '100%', marginBottom: '5%'}} onClick={loginWithGithub}/>
+                <GoogleButton style={{width: '100%', marginBottom: '5%'}} onClick={loginWithGoogle}/>
+            </OAuthLogins>
         </LoginContainer>
     )
 }
@@ -98,8 +113,18 @@ const StyledP = styled.p`
 const SubmitButton = styled(Button)`
   && {
     text-transform: none;
-    width: 100%
+    width: 100%;
+    height: 50px;
+    background-color: #F05454;
+
+    :hover {
+      background-color: #B74141FF;
+    }
   }
+`
+const OAuthLogins = styled.div`
+  margin-top: 15%;
+  width: 100%;
 `
 
 const LoginContainer = styled.div`
@@ -109,16 +134,16 @@ const LoginContainer = styled.div`
   max-width: 45%;
   margin: 10% auto 0 auto;
   align-items: center;
-  
-  @media(min-width: 1000px){
+
+  @media (min-width: 1000px) {
     width: 450px;
   }
-  
-  @media(max-width: 680px){
+
+  @media (max-width: 680px) {
     max-width: 70%;
   }
 
-  @media(max-width: 445px){
+  @media (max-width: 445px) {
     max-width: 87%;
   }
 `
@@ -128,5 +153,4 @@ const StyledFormControl = styled(FormControl)`
     margin: 0 0 10% 0;
     width: 100%;
   }
-
 `
