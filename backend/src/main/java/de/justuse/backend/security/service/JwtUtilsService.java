@@ -3,9 +3,9 @@ package de.justuse.backend.security.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
@@ -15,9 +15,8 @@ import java.util.function.Function;
 @Service
 public class JwtUtilsService {
 
-    @Value("${de.justuse.backend.security.jwt.secret}")
-    private String JWT_SECRET;
-
+//    @Value("${de.justuse.backend.security.jwt.secret}")
+    private final String JWT_SECRET = "abc321";
 
 
     public long createDuration(){
