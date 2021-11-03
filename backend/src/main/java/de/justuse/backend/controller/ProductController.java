@@ -35,14 +35,7 @@ public class ProductController {
     public Product addProductToDB(@RequestBody Product product) throws InvalidObjectException {
 
         if(product.getMAX_RENTAL_CYCLE() != 0){
-           Product testProduct = new ProductBuilder(null, product.getMAX_RENTAL_CYCLE())
-                    .setTitle(product.getTitle())
-                    .setDescription(product.getDescription())
-                    .setAmount(product.getAmount())
-                    .setPrice(product.getPrice())
-                    .setLocation(product.getLocation())
-                    .build();
-            return productService.addProduct(testProduct);
+            return productService.addProduct(product);
         } else {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Trying to add new product with MAX_RENTAL_CYCLE = 0. MAX_RENTAL_CYCLE can't be 0");
         }

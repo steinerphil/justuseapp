@@ -24,7 +24,6 @@ public class AppUserDetailService implements UserDetailsService {
                 .map(appUser -> User
                         .withUsername(username)
                         .password(appUser.getPassword())
-//                        .authorities(new ArrayList<>())
                         .authorities("user")
                         .build())
                 .orElseThrow( () -> new UsernameNotFoundException("Username does not exist: " + username));
