@@ -8,7 +8,8 @@ export default function Auth ({code}) {
     useEffect(() => {
         const codeToJson = {code}
         loginWithGithub(codeToJson)
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return(
         <h2>logging in...</h2>
