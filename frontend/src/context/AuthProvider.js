@@ -24,7 +24,6 @@ export default function AuthProvider({children}) {
         postGithubLogin(code)
             .then(response => response.data)
             .then(token => {
-                console.log(token)
                 setToken(token)})
             .then(() => history.push("/"))
             .catch(err => console.log(err))
