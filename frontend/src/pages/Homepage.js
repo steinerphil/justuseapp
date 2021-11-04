@@ -124,8 +124,7 @@ const Phone = styled.img`
   transform: rotate(-5deg);
 
   @media (max-width: 572px) {
-    visibility: hidden;
-    position: absolute;
+    display: none;
   }
 `
 
@@ -202,15 +201,21 @@ const IconDiv = styled.div`
   text-align: center;
 `
 const SearchIcon = styled(ScreenSearchDesktopTwoToneIcon)`
-  &&{  width: 35px;
-    height: auto;}
+  && {
+    width: 35px;
+    height: auto;
+  }
 
 `
 const ShoppingIcon = styled(ShoppingCartTwoToneIcon)`
-  &&{  width: 35px;
-    height: auto;}
+  && {
+    width: 35px;
+    height: auto;
+  }
 `
 const FinishIcon = styled(AssignmentTurnedInTwoToneIcon)`
-  &&{  width: 35px;
-    height: auto;}
+  && {
+    width: 35px;
+    height: auto;
+  }
 `
