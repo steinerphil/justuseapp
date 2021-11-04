@@ -11,6 +11,7 @@ import styled from "styled-components/macro";
 import {AuthContext} from "../context/AuthProvider";
 import GithubButton from 'react-github-login-button';
 import GoogleButton from 'react-google-button'
+import {getClientId} from "../service/loginApiService";
 
 export default function Login() {
 
@@ -44,7 +45,11 @@ export default function Login() {
     }
 
     function loginWithGithub() {
-        console.log("Github login button clicked")
+        getClientId().then((data) => {
+            const clientId = data.clientId
+            window.open("https://github.com/login/oauth/authorize?client_id=" + clientId, "_top")
+        })
+            .catch(err => console.log(err))
     }
 
 

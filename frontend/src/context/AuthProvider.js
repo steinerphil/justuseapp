@@ -1,5 +1,5 @@
 import {createContext, useState} from "react";
-import {postLogin} from "../service/productApiService";
+import {postGithubLogin, postLogin} from "../service/loginApiService";
 import {useHistory} from "react-router-dom";
 
 
@@ -20,8 +20,19 @@ export default function AuthProvider({children}) {
             .catch(err => console.log(err))
     }
 
+    function loginWithGithub(code){
+        postGithubLogin(code)
+            .then(response => response.data)
+            .then(token => {
+                console.log(token)
+                setToken(token)})
+            .then(() => history.push("/"))
+            .catch(err => console.log(err))
+    }
+
+
     return(
-        <AuthContext.Provider value={{token, login}}>
+        <AuthContext.Provider value={{token, login, loginWithGithub}}>
             {children}
         </AuthContext.Provider>
     )
