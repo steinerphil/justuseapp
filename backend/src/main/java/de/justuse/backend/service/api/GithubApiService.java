@@ -3,13 +3,12 @@ package de.justuse.backend.service.api;
 import de.justuse.backend.model.github.CodeToTokenDTO;
 import de.justuse.backend.model.github.GithubApiResponse;
 import de.justuse.backend.model.github.GithubUserResponseDTO;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -19,8 +18,10 @@ public class GithubApiService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public GithubApiResponse getGithubAccessToken(CodeToTokenDTO codeToTokenDTO){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         ResponseEntity<GithubApiResponse> response = restTemplate
-                .postForEntity(API_URL, codeToTokenDTO, GithubApiResponse.class);
+                .exchange(API_URL, HttpMethod.POST, new HttpEntity<>(codeToTokenDTO, headers), GithubApiResponse.class);
         return response.getBody();
     }
 
