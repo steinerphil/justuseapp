@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class ProductService {
@@ -22,7 +23,7 @@ public class ProductService {
 
     public Product addProduct(Product apiProduct) throws InvalidObjectException {
         if(apiProduct.getTitle() == null || apiProduct.getDescription() == null || apiProduct.getPrice()==0 || apiProduct.getLocation() == null){
-            throw new InvalidObjectException("product is not valid, please check title, description and price");
+            throw new InvalidObjectException("product is not valid, please check title, description, location and price");
         }
         Product product = new ProductBuilder(null, apiProduct.getMAX_RENTAL_CYCLE())
                 .setTitle(apiProduct.getTitle())

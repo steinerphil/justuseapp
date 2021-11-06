@@ -24,7 +24,7 @@ function App() {
                     <Auth code={code}/>
                 </Route>
                 <Route exact path="/products/overview/">
-                    <ProductOverview/>
+                    <ProductOverview />
                 </Route>
             </Switch>
         </div>

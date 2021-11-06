@@ -15,22 +15,25 @@ export default function AuthProvider({children}) {
             .then(response => response.data)
             .then(data => {
                 setToken(data)
+                localStorage.setItem('token', data)
             })
-            .then( () => history.push("/"))
+            .then(() => history.push("/"))
             .catch(err => console.log(err))
     }
 
-    function loginWithGithub(code){
+    function loginWithGithub(code) {
         postGithubLogin(code)
             .then(response => response.data)
             .then(token => {
-                setToken(token)})
+                setToken(token)
+                localStorage.setItem('token', token)
+            })
             .then(() => history.push("/"))
             .catch(err => console.log(err))
     }
 
 
-    return(
+    return (
         <AuthContext.Provider value={{token, login, loginWithGithub}}>
             {children}
         </AuthContext.Provider>

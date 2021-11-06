@@ -1,6 +1,7 @@
 import useProducts from "../hooks/useProducts";
 import {useEffect} from "react";
 import ProductCard from "../components/ProductCard";
+import styled from "styled-components/macro";
 
 export default function ProductOverview(){
 
@@ -13,12 +14,17 @@ export default function ProductOverview(){
 
     return(
 
-        <>
+        <Wrapper>
+            <style>{'body {background-color:#DDDDDD;'}</style>
             {products.map(product => (
                 <ProductCard product={product} key={product.id}/>
             ))}
-        </>
+        </Wrapper>
 
     )
 
 }
+
+const Wrapper = styled.div`
+  display: flex;
+`
