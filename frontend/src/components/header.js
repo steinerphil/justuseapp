@@ -11,8 +11,9 @@ function Header() {
         <HeaderContainer>
             <Logo src={logo} onClick={() => history.push("/")} alt="logo"/>
             <ButtonContainer>
-                <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>
-            <SearchButton variant="outlined" onClick={() => history.push("/products/overview")}>Produktsuche</SearchButton>
+                {!localStorage.getItem("token") && <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>}
+                <SearchButton variant="outlined"
+                              onClick={() => history.push("/products/overview")}>Produktsuche</SearchButton>
             </ButtonContainer>
         </HeaderContainer>
     )
@@ -51,6 +52,7 @@ const LoginButton = styled(Button)`
       border-color: #F57575FF;
       color: #F57575FF;
     }
+
     @media (min-width: 573px) {
       display: none;
     }
@@ -70,6 +72,7 @@ const SearchButton = styled(Button)`
       border-color: #9E9D9DFF;
       color: #9E9D9DFF;
     }
+
     @media (min-width: 573px) {
       display: none;
     }
@@ -78,7 +81,7 @@ const SearchButton = styled(Button)`
 `
 
 const ButtonContainer = styled.div`
-margin-left: auto;
+  margin-left: auto;
   display: flex;
 `
 

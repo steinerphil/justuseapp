@@ -23,7 +23,7 @@ export default function Homepage() {
                         und nebenbei zur Reduzierung der Müllproduktion beiträgst.
                     </PFirst>
                     <SearchButton variant="outlined" onClick={() => history.push("/products/overview")}>Produktsuche</SearchButton>
-                    <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>
+                    {!localStorage.getItem("token") && <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>}
                 </Heading>
                 <Phone src={phone} alt="smartphone"/>
             </FirstSection>

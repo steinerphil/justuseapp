@@ -7,8 +7,9 @@ export const AuthContext = createContext({})
 
 export default function AuthProvider({children}) {
 
-    const [token, setToken] = useState()
-    const history = useHistory()
+    const [token, setToken] = useState();
+    const history = useHistory();
+
 
     const login = (credentials) => {
         postLogin(credentials)
