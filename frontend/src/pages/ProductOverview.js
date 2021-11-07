@@ -20,9 +20,9 @@ export default function ProductOverview() {
                 <style>{'body {background-color:#DDDDDD;'}</style>
                 <Sidebar/>
                 <CardContainer>
-                {products.map(product => (
-                    <ProductCard product={product} key={product.id}/>
-                ))}
+                    {products.map(product => (
+                        <ProductCard product={product} key={product.id}/>
+                    ))}
                 </CardContainer>
             </Wrapper>
         </>
@@ -35,5 +35,11 @@ const Wrapper = styled.div`
 `
 
 const CardContainer = styled.div`
-    display: flex;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  
+  @media(max-width: 685px){
+    justify-content: center;
+  }
 `

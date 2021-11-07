@@ -10,7 +10,7 @@ export default function ProductCard({product: {price, title, isAvailable}}) {
     return (
 
 
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 232, height: "fit-content", flexShrink: 0, margin: "2% 0 0 2%" }}>
         <CardMedia
             component="img"
             alt="green iguana"
