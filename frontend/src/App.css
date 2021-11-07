@@ -3,3 +3,7 @@
 html,body{
     margin: 0;
 }
+
+.app{
+    width: fit-content;
+}
