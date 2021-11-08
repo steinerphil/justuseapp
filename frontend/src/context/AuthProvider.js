@@ -7,32 +7,41 @@ export const AuthContext = createContext({})
 
 export default function AuthProvider({children}) {
 
-    const [token, setToken] = useState()
-    const history = useHistory()
+    const [token, setToken] = useState(null);
+    const history = useHistory();
+
 
     const login = (credentials) => {
         postLogin(credentials)
             .then(response => response.data)
             .then(data => {
                 setToken(data)
+                localStorage.setItem('token', data)
             })
-            .then( () => history.push("/"))
+            .then(() => history.goBack())
             .catch(err => console.log(err))
     }
 
-    function loginWithGithub(code){
+    function loginWithGithub(code) {
         postGithubLogin(code)
             .then(response => response.data)
             .then(token => {
-                console.log(token)
-                setToken(token)})
-            .then(() => history.push("/"))
+                setToken(token)
+                localStorage.setItem('token', token)
+            })
+            .then(() => history.goBack())
             .catch(err => console.log(err))
     }
 
+    function logout() {
+        setToken(null);
+        localStorage.removeItem("token")
+        history.push("/")
+    }
 
-    return(
-        <AuthContext.Provider value={{token, login, loginWithGithub}}>
+
+    return (
+        <AuthContext.Provider value={{token, login, loginWithGithub, logout}}>
             {children}
         </AuthContext.Provider>
     )

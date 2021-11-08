@@ -7,9 +7,12 @@ import Filter3Icon from '@mui/icons-material/Filter3';
 import ScreenSearchDesktopTwoToneIcon from '@mui/icons-material/ScreenSearchDesktopTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import AssignmentTurnedInTwoToneIcon from '@mui/icons-material/AssignmentTurnedInTwoTone';
+import Button from "@mui/material/Button";
+import {useHistory} from "react-router-dom";
 
 export default function Homepage() {
 
+    const history = useHistory()
 
     return (
         <Container>
@@ -19,6 +22,8 @@ export default function Homepage() {
                     <PFirst>Die beste Art wie du Geld, Zeit und Platz sparst
                         und nebenbei zur Reduzierung der Müllproduktion beiträgst.
                     </PFirst>
+                    <SearchButton variant="outlined" onClick={() => history.push("/products/overview")}>Produktsuche</SearchButton>
+                    {!localStorage.getItem("token") && <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>}
                 </Heading>
                 <Phone src={phone} alt="smartphone"/>
             </FirstSection>
@@ -77,9 +82,13 @@ const Heading = styled.div`
   position: relative;
   top: 1rem;
   padding: 5%;
+  
+  @media(min-width: 600px) and (max-width: 767px){
+    padding: 0 5% 5% 5%;
+  }
 `
 
-const H2 = styled.h1`
+const H2 = styled.h2`
   margin-top: 0;
   margin-bottom: auto;
   letter-spacing: -.025em;
@@ -115,6 +124,13 @@ const PFirst = styled.p`
     max-width: 36rem;
     margin-top: 1.25rem;
   }
+
+  @media (min-width: 930px) {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin: 1.25rem 0 8.5% 0;
+
+  }
 `
 
 const Phone = styled.img`
@@ -127,6 +143,49 @@ const Phone = styled.img`
     display: none;
   }
 `
+
+const LoginButton = styled(Button)`
+  && {
+    text-transform: none;
+    color: #F05454;
+    border-color: #F05454;
+    margin-left: 3%;
+    order: 2;
+    font-size: 1.15rem;
+    font-weight: 400;
+
+    :hover {
+      border-color: #F57575FF;
+      color: #F57575FF;
+    }
+
+    @media (max-width: 572px) {
+      display: none;
+    }
+  }
+
+`
+
+const SearchButton = styled(Button)`
+  && {
+    text-transform: none;
+    color: #DDDDDD;
+    border-color: #DDDDDD;
+    order: 1;
+    font-size: 1.15rem;
+    font-weight: 400;
+
+    :hover {
+      border-color: #9E9D9DFF;
+      color: #9E9D9DFF;
+    }
+    @media (max-width: 572px) {
+      display: none;
+    }
+  }
+
+`
+
 
 const SecondSection = styled.section`
   background-color: #DDDDDD;

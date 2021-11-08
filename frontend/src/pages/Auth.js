@@ -1,5 +1,6 @@
 import {useContext, useEffect} from "react";
 import {AuthContext} from "../context/AuthProvider";
+import {Backdrop, CircularProgress} from "@mui/material";
 
 export default function Auth ({code}) {
 
@@ -12,7 +13,13 @@ export default function Auth ({code}) {
     },[])
 
     return(
-        <h2>logging in...</h2>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={true}
+
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
     )
 
 }
