@@ -11,8 +11,6 @@ import ProductGallery from "../components/ProductGallery";
 export default function ProductOverview() {
 
     const {products, getAllProducts} = useProducts()
-
-    // const[displayProducts, setProducts] = useState(products)
     const [searchString, setSearchString] = useState("")
 
     useEffect(() => {
