@@ -15,7 +15,7 @@ export default function ProductCard({product: {price, title, isAvailable}}) {
             component="img"
             alt="green iguana"
             height="140"
-            image="https://res.cloudinary.com/dlxgg8z5j/image/upload/v1636193241/sample.jpg"
+            image="https://res.cloudinary.com/dlxgg8z5j/image/upload/v1636316307/ebike_lastenrad_bbsaab.jpg"
         />
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">
