@@ -4,6 +4,8 @@ import ProductCard from "../components/ProductCard";
 import styled from "styled-components/macro";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
+import Box from "@mui/material/Box";
+import {Toolbar} from "@mui/material";
 
 export default function ProductOverview() {
 
@@ -23,31 +25,26 @@ export default function ProductOverview() {
     }
 
     return (
-        <>
-            <Wrapper>
-                <style>{'body {background-color:#DDDDDD;'}</style>
-                {renderNavigation()}
+        <Box sx={{display: 'flex'}}>
+            <style>{'body {background-color:#DDDDDD;'}</style>
+            {renderNavigation()}
+                <Toolbar/>
                 <CardContainer>
                     {products.map(product => (
                         <ProductCard product={product} key={product.id}/>
                     ))}
                 </CardContainer>
-            </Wrapper>
-        </>
+        </Box>
     )
 
 }
-
-const Wrapper = styled.div`
-  display: flex;
-`
 
 const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
 
-  @media (max-width: 685px) {
+  @media (max-width: 728px) {
     justify-content: center;
   }
 `

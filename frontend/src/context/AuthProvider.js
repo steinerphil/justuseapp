@@ -18,7 +18,7 @@ export default function AuthProvider({children}) {
                 setToken(data)
                 localStorage.setItem('token', data)
             })
-            .then(() => history.push("/"))
+            .then(() => history.goBack())
             .catch(err => console.log(err))
     }
 
@@ -29,12 +29,14 @@ export default function AuthProvider({children}) {
                 setToken(token)
                 localStorage.setItem('token', token)
             })
-            .then(() => history.push("/"))
+            .then(() => history.goBack())
             .catch(err => console.log(err))
     }
 
     function logout() {
         setToken(null);
+        localStorage.removeItem("token")
+        history.push("/")
     }
 
 

@@ -27,7 +27,6 @@ function Header() {
                                  onClick={() => history.push("/products/overview")}>Produktsuche</WhiteButton>
                     <WhiteButton variant="outlined"
                                  onClick={() => {
-                                     localStorage.removeItem("token")
                                      logout()
                                  }}>Logout</WhiteButton>
                 </ButtonContainer>
@@ -37,9 +36,7 @@ function Header() {
                 <ButtonContainer>
                     <WhiteButton variant="outlined"
                                  onClick={() => {
-                                     localStorage.removeItem("token")
                                      logout()
-                                     history.push("/")
                                  }}>Logout</WhiteButton>
                 </ButtonContainer>
             )

@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -10,13 +9,18 @@ import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
+import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import {useHistory} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthProvider";
+import styled from "styled-components/macro";
 
 const drawerWidth = 180;
 
 export default function Sidebar() {
 
     const history = useHistory();
+    const {logout} = useContext(AuthContext)
 
     function renderList() {
         if (!localStorage.getItem("token")) {
@@ -27,7 +31,7 @@ export default function Sidebar() {
         } else {
             return {
                 "a": ['Suchen', 'Favoriten', 'Gemietet'],
-                "b": ["Account"]
+                "b": ["Account", "Logout"]
             }
         }
     }
@@ -35,13 +39,14 @@ export default function Sidebar() {
     function handleItemClick(text) {
         switch (text){
             case "Login": return history.push("/login");
+            case "Logout": return logout();
             default: return null;
         }
     }
 
 
     return (
-    <Box sx={{display: 'flex'}}>
+<WhiteBox>
         <Drawer
             sx={{
                 width: drawerWidth,
@@ -51,7 +56,7 @@ export default function Sidebar() {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
-                    position: 'relative',
+                    marginTop: "75px",
                 },
             }}
             variant="permanent"
@@ -84,7 +89,8 @@ export default function Sidebar() {
                             {
                                 {
                                     "Account": <AccountCircleTwoToneIcon/>,
-                                    "Login": <LockOpenTwoToneIcon/>
+                                    "Login": <LockOpenTwoToneIcon/>,
+                                    "Logout": <LockTwoToneIcon/>,
                                 }[text]
                             }
                         </ListItemIcon>
@@ -93,6 +99,10 @@ export default function Sidebar() {
                 ))}
             </List>
         </Drawer>
-    </Box>
+</WhiteBox>
 );
 }
+
+const WhiteBox = styled.div`
+background-color: white
+`
