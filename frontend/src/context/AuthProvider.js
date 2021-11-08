@@ -29,7 +29,7 @@ export default function AuthProvider({children}) {
                 setToken(token)
                 localStorage.setItem('token', token)
             })
-            .then(() => history.goBack())
+            .then(() => history.push("/"))
             .catch(err => console.log(err))
     }
 
