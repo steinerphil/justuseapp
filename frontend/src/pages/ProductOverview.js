@@ -5,7 +5,6 @@ import styled from "styled-components/macro";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
 import Box from "@mui/material/Box";
-import {Toolbar} from "@mui/material";
 
 export default function ProductOverview() {
 
@@ -28,7 +27,6 @@ export default function ProductOverview() {
         <Box sx={{display: 'flex'}}>
             <style>{'body {background-color:#DDDDDD;'}</style>
             {renderNavigation()}
-                <Toolbar/>
                 <CardContainer>
                     {products.map(product => (
                         <ProductCard product={product} key={product.id}/>

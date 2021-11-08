@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function ProductCard({product: {price, title, isAvailable}}) {
+export default function ProductCard({product:{imageUrls, title, price, available}}) {
 
     return (
 
@@ -15,7 +15,7 @@ export default function ProductCard({product: {price, title, isAvailable}}) {
             component="img"
             alt="green iguana"
             height="140"
-            image="https://res.cloudinary.com/dlxgg8z5j/image/upload/v1636316307/ebike_lastenrad_bbsaab.jpg"
+            image={imageUrls[0]}
         />
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -25,7 +25,7 @@ export default function ProductCard({product: {price, title, isAvailable}}) {
                ab {price.toFixed(2)} € p.M.
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                Verfügbarkeit: {isAvailable ? "Verfügbar" : "derzeit vermietet"}
+                Verfügbarkeit: {available? "Verfügbar" : "derzeit vermietet"}
             </Typography>
         </CardContent>
         <CardActions>

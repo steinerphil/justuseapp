@@ -22,7 +22,7 @@ public class ProductService {
 
 
     public Product addProduct(Product apiProduct) throws InvalidObjectException {
-        if(apiProduct.getTitle() == null || apiProduct.getDescription() == null || apiProduct.getPrice()==0 || apiProduct.getLocation() == null){
+        if (apiProduct.getTitle() == null || apiProduct.getDescription() == null || apiProduct.getPrice() == 0 || apiProduct.getLocation() == null) {
             throw new InvalidObjectException("product is not valid, please check title, description, location and price");
         }
         Product product = new ProductBuilder(null, apiProduct.getMAX_RENTAL_CYCLE())
@@ -31,11 +31,13 @@ public class ProductService {
                 .setAmount(apiProduct.getAmount())
                 .setPrice(apiProduct.getPrice())
                 .setLocation(apiProduct.getLocation())
+                .setImageUrls(apiProduct.getImageUrls())
+                .setIsAvailable(apiProduct.isAvailable())
                 .build();
         return productRepo.save(product);
     }
 
     public List<Product> getProducts() {
-       return productRepo.findAll();
+        return productRepo.findAll();
     }
 }
