@@ -2,19 +2,54 @@ import styled from "styled-components/macro";
 import logo from "../components/images/longsmallwhitepransp.png"
 import Button from '@mui/material/Button';
 import {useHistory} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthProvider";
 
 function Header() {
 
     const history = useHistory()
+    const {logout} = useContext(AuthContext)
+
+
+    function loadButtons() {
+        if (!localStorage.getItem("token")) {
+            return (
+                <ButtonContainer>
+                    <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>
+                    <WhiteButton variant="outlined"
+                                 onClick={() => history.push("/products/overview")}>Produktsuche</WhiteButton>
+                </ButtonContainer>
+            )
+        } else if (localStorage.getItem("token") && history.location.pathname === "/") {
+            return (
+                <ButtonContainer>
+                    <WhiteButton variant="outlined"
+                                 onClick={() => history.push("/products/overview")}>Produktsuche</WhiteButton>
+                    <WhiteButton variant="outlined"
+                                 onClick={() => {
+                                     localStorage.removeItem("token")
+                                     logout()
+                                 }}>Logout</WhiteButton>
+                </ButtonContainer>
+            )
+        } else {
+            return (
+                <ButtonContainer>
+                    <WhiteButton variant="outlined"
+                                 onClick={() => {
+                                     localStorage.removeItem("token")
+                                     logout()
+                                     history.push("/")
+                                 }}>Logout</WhiteButton>
+                </ButtonContainer>
+            )
+        }
+    }
 
     return (
         <HeaderContainer>
             <Logo src={logo} onClick={() => history.push("/")} alt="logo"/>
-            <ButtonContainer>
-                {!localStorage.getItem("token") && <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>}
-                <SearchButton variant="outlined"
-                              onClick={() => history.push("/products/overview")}>Produktsuche</SearchButton>
-            </ButtonContainer>
+            {loadButtons()}
         </HeaderContainer>
     )
 }
@@ -60,7 +95,7 @@ const LoginButton = styled(Button)`
 
 `
 
-const SearchButton = styled(Button)`
+const WhiteButton = styled(Button)`
   && {
     text-transform: none;
     color: #DDDDDD;

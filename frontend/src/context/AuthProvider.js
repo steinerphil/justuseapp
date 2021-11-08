@@ -7,7 +7,7 @@ export const AuthContext = createContext({})
 
 export default function AuthProvider({children}) {
 
-    const [token, setToken] = useState();
+    const [token, setToken] = useState(null);
     const history = useHistory();
 
 
@@ -33,9 +33,13 @@ export default function AuthProvider({children}) {
             .catch(err => console.log(err))
     }
 
+    function logout() {
+        setToken(null);
+    }
+
 
     return (
-        <AuthContext.Provider value={{token, login, loginWithGithub}}>
+        <AuthContext.Provider value={{token, login, loginWithGithub, logout}}>
             {children}
         </AuthContext.Provider>
     )
