@@ -12,7 +12,13 @@ function Header() {
 
 
     function loadButtons() {
-        if (!localStorage.getItem("token")) {
+        if (!localStorage.getItem("token") && history.location.pathname === "/products/overview") {
+            return (
+                <ButtonContainer>
+                    <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>
+                </ButtonContainer>
+            )
+        } else if (!localStorage.getItem("token") && history.location.pathname !== "/products/overview") {
             return (
                 <ButtonContainer>
                     <LoginButton variant="outlined" onClick={() => history.push("/login")}>Login</LoginButton>
@@ -25,19 +31,19 @@ function Header() {
                 <ButtonContainer>
                     <WhiteButton variant="outlined"
                                  onClick={() => history.push("/products/overview")}>Produktsuche</WhiteButton>
-                    <WhiteButton variant="outlined"
-                                 onClick={() => {
-                                     logout()
-                                 }}>Logout</WhiteButton>
+                    <LogoutButton variant="outlined"
+                                  onClick={() => {
+                                      logout()
+                                  }}>Logout</LogoutButton>
                 </ButtonContainer>
             )
         } else {
             return (
                 <ButtonContainer>
-                    <WhiteButton variant="outlined"
-                                 onClick={() => {
-                                     logout()
-                                 }}>Logout</WhiteButton>
+                    <LogoutButton variant="outlined"
+                                  onClick={() => {
+                                      logout()
+                                  }}>Logout</LogoutButton>
                 </ButtonContainer>
             )
         }
@@ -59,15 +65,22 @@ const HeaderContainer = styled.section`
   display: flex;
   align-items: center;
   padding: 0 2%;
+
+  @media (max-width: 500px) {
+    height: 47px;
+  }
 `
 
 const Logo = styled.img`
-  @media (min-width: 260px) {
-    width: auto;
+  width: auto;
+  @media (min-width: 500px) {
     height: 50%
   }
-  @media (max-width: 360px) {
+  @media (max-width: 330px) {
     display: none;
+  }
+  @media (min-width: 330px) and (max-width: 500px) {
+    height: 70%;
   }
 
 `
@@ -109,7 +122,20 @@ const WhiteButton = styled(Button)`
       display: none;
     }
   }
+`
+const LogoutButton = styled(Button)`
+  && {
+    text-transform: none;
+    color: #DDDDDD;
+    border-color: #DDDDDD;
+    margin-left: 3%;
+    order: 1;
 
+    :hover {
+      border-color: #9E9D9DFF;
+      color: #9E9D9DFF;
+    }
+  }
 `
 
 const ButtonContainer = styled.div`

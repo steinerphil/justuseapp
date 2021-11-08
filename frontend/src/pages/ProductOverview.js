@@ -1,15 +1,17 @@
 import useProducts from "../hooks/useProducts";
-import {useEffect} from "react";
-import ProductCard from "../components/ProductCard";
-import styled from "styled-components/macro";
+import {useEffect, useState} from "react";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
 import Box from "@mui/material/Box";
-import {Toolbar} from "@mui/material";
+import {TextField} from "@mui/material";
+import styled from "styled-components/macro";
+import ProductGallery from "../components/ProductGallery";
+
 
 export default function ProductOverview() {
 
     const {products, getAllProducts} = useProducts()
+    const [searchString, setSearchString] = useState("")
 
     useEffect(() => {
         getAllProducts()
@@ -24,27 +26,33 @@ export default function ProductOverview() {
         }
     }
 
+    const search = (action) => {
+        let string = action.target.value;
+        setSearchString(string)
+    }
+
+    const handleProducts = products.filter((element) => {
+        return element.title.toLowerCase().includes(searchString.toLowerCase())
+    })
+
     return (
         <Box sx={{display: 'flex'}}>
-            <style>{'body {background-color:#DDDDDD;'}</style>
+            <style>{'body {background-color:#DDDDDD; position:fixed; width:100%'}</style>
             {renderNavigation()}
-                <Toolbar/>
-                <CardContainer>
-                    {products.map(product => (
-                        <ProductCard product={product} key={product.id}/>
-                    ))}
-                </CardContainer>
+            <Wrapper>
+                <StyledTextField id="outlined-search" label="Suchen..." type="search" onInput={search}/>
+                <ProductGallery products={handleProducts}/>
+            </Wrapper>
         </Box>
     )
-
 }
 
-const CardContainer = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-
-  @media (max-width: 728px) {
-    justify-content: center;
-  }
+  flex-direction: column;
+`
+const StyledTextField = styled(TextField)`
+    &&{
+      margin: 10px 10%;
+    }
 `

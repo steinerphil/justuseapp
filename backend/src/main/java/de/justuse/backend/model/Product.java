@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Document("products")
@@ -18,5 +20,6 @@ public class Product {
     private final int MAX_RENTAL_CYCLE;
     private Location location;
     private double price;
+    private List<String> imageUrls;
 
 }

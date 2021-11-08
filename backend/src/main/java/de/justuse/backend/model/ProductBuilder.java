@@ -3,6 +3,8 @@ package de.justuse.backend.model;
 import de.justuse.backend.enums.Location;
 import lombok.Builder;
 
+import java.util.List;
+
 public class ProductBuilder {
 
     private final String id;
@@ -13,6 +15,7 @@ public class ProductBuilder {
     private final int MAX_RENTAL_CYCLE;
     private Location location;
     private double price;
+    private List<String> imageUrls;
 
 
     public ProductBuilder(String id, int MAX_RENTAL_CYCLE) {
@@ -50,7 +53,12 @@ public class ProductBuilder {
         return this;
     }
 
+    public ProductBuilder setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+        return this;
+    }
+
     public Product build() {
-        return new Product(id, title, description, amount, isAvailable, MAX_RENTAL_CYCLE, location, price);
+        return new Product(id, title, description, amount, isAvailable, MAX_RENTAL_CYCLE, location, price, imageUrls);
     }
 }
