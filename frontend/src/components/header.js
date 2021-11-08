@@ -25,19 +25,19 @@ function Header() {
                 <ButtonContainer>
                     <WhiteButton variant="outlined"
                                  onClick={() => history.push("/products/overview")}>Produktsuche</WhiteButton>
-                    <WhiteButton variant="outlined"
+                    <LogoutButton variant="outlined"
                                  onClick={() => {
                                      logout()
-                                 }}>Logout</WhiteButton>
+                                 }}>Logout</LogoutButton>
                 </ButtonContainer>
             )
         } else {
             return (
                 <ButtonContainer>
-                    <WhiteButton variant="outlined"
+                    <LogoutButton variant="outlined"
                                  onClick={() => {
                                      logout()
-                                 }}>Logout</WhiteButton>
+                                 }}>Logout</LogoutButton>
                 </ButtonContainer>
             )
         }
@@ -109,7 +109,20 @@ const WhiteButton = styled(Button)`
       display: none;
     }
   }
+`
+const LogoutButton = styled(Button)`
+  && {
+    text-transform: none;
+    color: #DDDDDD;
+    border-color: #DDDDDD;
+    margin-left: 3%;
+    order: 1;
 
+    :hover {
+      border-color: #9E9D9DFF;
+      color: #9E9D9DFF;
+    }
+  }
 `
 
 const ButtonContainer = styled.div`
