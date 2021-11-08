@@ -13,7 +13,6 @@ import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import {useHistory} from "react-router-dom";
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
-import styled from "styled-components/macro";
 
 const drawerWidth = 180;
 
@@ -46,7 +45,6 @@ export default function Sidebar() {
 
 
     return (
-<WhiteBox>
         <Drawer
             sx={{
                 width: drawerWidth,
@@ -99,10 +97,5 @@ export default function Sidebar() {
                 ))}
             </List>
         </Drawer>
-</WhiteBox>
 );
 }
-
-const WhiteBox = styled.div`
-background-color: white
-`

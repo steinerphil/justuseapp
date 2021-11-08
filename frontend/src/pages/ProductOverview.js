@@ -1,10 +1,10 @@
 import useProducts from "../hooks/useProducts";
 import {useEffect} from "react";
 import ProductCard from "../components/ProductCard";
-import styled from "styled-components/macro";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
 import Box from "@mui/material/Box";
+import ImageList from "@mui/material/ImageList";
 
 export default function ProductOverview() {
 
@@ -23,26 +23,55 @@ export default function ProductOverview() {
         }
     }
 
+    function renderImageList() {
+        if (window.innerWidth < 679) {
+            return ({
+                "gridTemplateColumns": "repeat(1, 1fr)",
+                "gap": "15px",
+                "padding": "0 4%"
+            })
+        } else if (window.innerWidth > 979) {
+            return ({
+                "gridTemplateColumns": "repeat(3, 1fr)",
+                "gap": "4px",
+                "padding": "0"
+            })
+        } else {
+            return ({
+                "gridTemplateColumns": "repeat(2, 1fr)",
+                "gap": "4px",
+                "padding": "0"
+            })
+        }
+    }
+
+    //substract header and if mobile also footer from screenHeight
+    function listHeight() {
+        if (window.innerWidth > 500) {
+            return window.innerHeight - 80
+        } else {
+            return window.innerHeight - 75 - 75
+        }
+
+    }
+
     return (
         <Box sx={{display: 'flex'}}>
-            <style>{'body {background-color:#DDDDDD;'}</style>
+            <style>{'body {background-color:#DDDDDD; position:fixed; width:100%'}</style>
             {renderNavigation()}
-                <CardContainer>
-                    {products.map(product => (
-                        <ProductCard product={product} key={product.id}/>
-                    ))}
-                </CardContainer>
+            <ImageList style={{
+                gridTemplateColumns: renderImageList().gridTemplateColumns,
+                gap: renderImageList().gap,
+                padding: renderImageList().padding,
+            }} sx={{
+                width: "auto",
+                height: listHeight(),
+                margin: "3px",
+            }}>
+                {products.map(product => (
+                    <ProductCard product={product} key={product.id}/>
+                ))}
+            </ImageList>
         </Box>
     )
-
 }
-
-const CardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-
-  @media (max-width: 728px) {
-    justify-content: center;
-  }
-`
