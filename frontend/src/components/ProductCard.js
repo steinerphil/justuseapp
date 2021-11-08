@@ -7,7 +7,7 @@ export default function ProductCard({product: {imageUrls, title, price, availabl
 
 
     return (
-            <ImageListItem key={imageUrls[0]} sx={{ minWidth: 235, height: "fit-content"}}>
+            <ImageListItem key={imageUrls[0]} sx={{ minWidth: 235, height: "fit-content"}} style={{height: "fit-content"}}>
                 <img
                     src={`${imageUrls[0]}?w=248&fit=crop&auto=format`}
                     srcSet={`${imageUrls[0]}?w=248&fit=crop&auto=format&dpr=2 2x`}

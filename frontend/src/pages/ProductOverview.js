@@ -1,14 +1,19 @@
 import useProducts from "../hooks/useProducts";
-import {useEffect} from "react";
-import ProductCard from "../components/ProductCard";
+import {useEffect, useState} from "react";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
 import Box from "@mui/material/Box";
-import ImageList from "@mui/material/ImageList";
+import {TextField} from "@mui/material";
+import styled from "styled-components/macro";
+import ProductGallery from "../components/ProductGallery";
+
 
 export default function ProductOverview() {
 
     const {products, getAllProducts} = useProducts()
+
+    // const[displayProducts, setProducts] = useState(products)
+    const [searchString, setSearchString] = useState("")
 
     useEffect(() => {
         getAllProducts()
@@ -23,55 +28,33 @@ export default function ProductOverview() {
         }
     }
 
-    function renderImageList() {
-        if (window.innerWidth < 679) {
-            return ({
-                "gridTemplateColumns": "repeat(1, 1fr)",
-                "gap": "15px",
-                "padding": "0 4%"
-            })
-        } else if (window.innerWidth > 979) {
-            return ({
-                "gridTemplateColumns": "repeat(3, 1fr)",
-                "gap": "4px",
-                "padding": "0"
-            })
-        } else {
-            return ({
-                "gridTemplateColumns": "repeat(2, 1fr)",
-                "gap": "4px",
-                "padding": "0"
-            })
-        }
+    const search = (action) => {
+        let string = action.target.value;
+        setSearchString(string)
     }
 
-    //substract header and if mobile also footer from screenHeight
-    function listHeight() {
-        if (window.innerWidth > 500) {
-            return window.innerHeight - 80
-        } else {
-            return window.innerHeight - 75 - 75
-        }
-
-    }
+    const handleProducts = products.filter((element) => {
+        return element.title.toLowerCase().includes(searchString.toLowerCase())
+    })
 
     return (
         <Box sx={{display: 'flex'}}>
             <style>{'body {background-color:#DDDDDD; position:fixed; width:100%'}</style>
             {renderNavigation()}
-            <ImageList style={{
-                gridTemplateColumns: renderImageList().gridTemplateColumns,
-                gap: renderImageList().gap,
-                padding: renderImageList().padding,
-            }} sx={{
-                width: "auto",
-                height: listHeight(),
-                margin: "3px",
-            }}>
-                {products.map(product => (
-                    <ProductCard product={product} key={product.id}/>
-                ))}
-            </ImageList>
+            <Wrapper>
+                <StyledTextField id="outlined-search" label="Suchen..." type="search" onInput={search}/>
+                <ProductGallery products={handleProducts}/>
+            </Wrapper>
         </Box>
     )
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+const StyledTextField = styled(TextField)`
+    &&{
+      margin: 10px 10%;
+    }
+`
