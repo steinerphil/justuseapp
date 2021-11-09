@@ -18,5 +18,5 @@ export default function useProducts() {
     }
 
 
-    return {getAllProducts, products, saveProduct}
+    return {getAllProducts, products, saveProduct,}
 }

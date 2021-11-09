@@ -11,9 +11,12 @@ import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
 import useProducts from "../hooks/useProducts";
+import FileUploader from "../components/FileUploader";
 
 
 export default function ProductAdministration() {
+
+    const [files, setFiles] = useState([])
 
     const token = localStorage.getItem("token")
     const {saveProduct} = useProducts()
@@ -26,6 +29,8 @@ export default function ProductAdministration() {
         price: '',
         isAvailable: true,
         MAX_RENTAL_CYCLE: '',
+
+        imageFiles: files,
 
     });
 
@@ -126,8 +131,9 @@ export default function ProductAdministration() {
                 <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
                     Speichern
                 </Button>
+                <p>{"Files: " + files.map(file => file.toString())}</p>
             </form>
-            <button onClick={()=> console.log(token)}>token</button>
+            <FileUploader setFiles={setFiles} files={files}/>
         </Box>
     )
 }
