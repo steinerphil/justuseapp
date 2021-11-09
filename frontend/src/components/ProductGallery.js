@@ -28,14 +28,14 @@ export default function ProductGallery({products}) {
     //subtract header, searchbar and if mobile also footer from screenHeight
     function listHeight() {
         if (window.innerWidth > 500) {
-            return window.innerHeight-80-66-10
+            return window.innerHeight - 80 - 66 - 10
         } else {
-            return window.innerHeight-75-43-66
+            return window.innerHeight - 75 - 43 - 66
         }
 
     }
 
-    return(<ImageList style={{
+    return (<ImageList style={{
         gridTemplateColumns: renderImageList().gridTemplateColumns,
         gap: renderImageList().gap,
         padding: renderImageList().padding,

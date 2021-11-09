@@ -42,6 +42,7 @@ export default function ProductOverview() {
             <Wrapper>
                 <StyledTextField id="outlined-search" label="Suchen..." type="search" onInput={search}/>
                 <ProductGallery products={handleProducts}/>
+                {/*<button onClick={()=> console.log(products)}>click</button>*/}
             </Wrapper>
         </Box>
     )
@@ -50,6 +51,7 @@ export default function ProductOverview() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `
 const StyledTextField = styled(TextField)`
     &&{
