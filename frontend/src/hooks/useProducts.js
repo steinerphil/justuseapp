@@ -1,6 +1,5 @@
 import {useState} from 'react'
-
-import {getProducts} from "../service/productApiService";
+import {getProducts, postProduct} from "../service/productApiService";
 
 export default function useProducts() {
 
@@ -14,6 +13,10 @@ export default function useProducts() {
             .catch(err => console.log(err))
     }
 
+    const saveProduct = (product, token) => {
+        postProduct(product, token).then(response => response.data)
+    }
 
-    return {getAllProducts, products}
+
+    return {getAllProducts, products, saveProduct}
 }

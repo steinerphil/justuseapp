@@ -10,9 +10,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
+import useProducts from "../hooks/useProducts";
 
 
 export default function ProductAdministration() {
+
+    const token = localStorage.getItem("token")
+    const {saveProduct} = useProducts()
 
     const [values, setValues] = useState({
         title: '',
@@ -29,10 +33,14 @@ export default function ProductAdministration() {
         setValues({...values, [prop]: event.target.value});
     };
 
+    function submitProduct() {
+        saveProduct(values, token)
+    }
+
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
 
-            <form onSubmit={() => console.log(values)}>
+            <form onSubmit={submitProduct}>
 
                 <TextField
                     label="Titel"
@@ -119,6 +127,7 @@ export default function ProductAdministration() {
                     Speichern
                 </Button>
             </form>
+            <button onClick={()=> console.log(token)}>token</button>
         </Box>
     )
 }
