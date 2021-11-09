@@ -31,7 +31,8 @@ export default function ProductAdministration() {
 
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
-            <div>
+
+            <form onSubmit={() => console.log(values)}>
 
                 <TextField
                     label="Titel"
@@ -39,6 +40,7 @@ export default function ProductAdministration() {
                     sx={{m: 1, width: '25ch'}}
                     value={values.title}
                     onChange={handleChange('title')}
+                    required={true}
                 />
 
                 <TextField
@@ -48,39 +50,44 @@ export default function ProductAdministration() {
                     rows={4}
                     value={values.description}
                     onChange={handleChange('description')}
+                    required={true}
+
                 />
 
-                <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
+                <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
                     <OutlinedInput
                         id="outlined-adornment"
                         placeholder="Anzahl"
                         value={values.amount}
                         onChange={handleChange('amount')}
                         endAdornment={<InputAdornment position="end">Stück</InputAdornment>}
+
                     />
                 </FormControl>
 
-                <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
+                <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
                     <OutlinedInput
                         id="outlined-adornment"
                         placeholder="max. Mietdauer"
                         value={values.MAX_RENTAL_CYCLE}
                         onChange={handleChange('MAX_RENTAL_CYCLE')}
                         endAdornment={<InputAdornment position="end">Monate</InputAdornment>}
+
                     />
                 </FormControl>
 
-                <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
+                <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
                     <OutlinedInput
                         id="outlined-adornment"
                         placeholder="Preis"
                         value={values.price}
                         onChange={handleChange('price')}
                         endAdornment={<InputAdornment position="end">€</InputAdornment>}
+
                     />
                 </FormControl>
 
-                <FormControl required sx={{m: 1, width: '25ch'}}>
+                <FormControl required={true} sx={{m: 1, width: '25ch'}}>
                     <InputLabel id="demo-simple-select-required-label">Standort</InputLabel>
                     <Select
                         labelId="demo-simple-select-required-label"
@@ -100,19 +107,18 @@ export default function ProductAdministration() {
 
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Verfügbar?</FormLabel>
-                    <RadioGroup row  defaultValue="true"
+                    <RadioGroup row defaultValue="true"
                                 value={values.isAvailable}
                                 onChange={handleChange('isAvailable')}>
-                        <FormControlLabel value="true" control={<Radio />} label="Ja" labelPlacement="start" />
-                    <FormControlLabel value="false" control={<Radio />} label="Nein" labelPlacement="start" />
+                        <FormControlLabel value="true" control={<Radio/>} label="Ja" labelPlacement="start"/>
+                        <FormControlLabel value="false" control={<Radio/>} label="Nein" labelPlacement="start"/>
                     </RadioGroup>
                 </FormControl>
 
-
-            </div>
-            <Button variant="contained" endIcon={<SendIcon />} onClick={ ()=> console.log(values) }>
-                Speichern
-            </Button>
+                <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
+                    Speichern
+                </Button>
+            </form>
         </Box>
     )
 }
