@@ -40,9 +40,8 @@ export default function ProductOverview() {
             <style>{'body {background-color:#DDDDDD; position:fixed; width:100%'}</style>
             {renderNavigation()}
             <Wrapper>
-                <StyledTextField id="outlined-search" label="Suchen..." type="search" onInput={search}/>
+                <StyledTextField id="outlined-search" label="Wonach suchst du?" type="search" onInput={search}/>
                 <ProductGallery products={handleProducts}/>
-                {/*<button onClick={()=> console.log(products)}>click</button>*/}
             </Wrapper>
         </Box>
     )
