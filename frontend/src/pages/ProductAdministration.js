@@ -3,23 +3,21 @@ import TextField from '@mui/material/TextField';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {InputLabel, MenuItem, RadioGroup, Select} from "@mui/material";
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
-import useProducts from "../hooks/useProducts";
-import FileUploader from "../components/FileUploader";
+import axios from "axios";
 
 
 export default function ProductAdministration() {
 
-    const [files, setFiles] = useState([])
+    const inputRef = useRef()
 
     const token = localStorage.getItem("token")
-    const {saveProduct} = useProducts()
 
     const [values, setValues] = useState({
         title: '',
@@ -29,18 +27,38 @@ export default function ProductAdministration() {
         price: '',
         isAvailable: true,
         MAX_RENTAL_CYCLE: '',
-
-        imageFiles: files,
-
     });
+
 
     const handleChange = (prop) => (event) => {
         setValues({...values, [prop]: event.target.value});
     };
 
-    function submitProduct() {
-        saveProduct(values, token)
+    function submitProduct(event) {
+        event.preventDefault();
+
+        const formData = new FormData()
+        const config = {
+            headers: {
+                "Authorization": token,
+                "Content-Type": "multipart/form-data",
+            }
+        }
+
+        formData.append('productDTO', new Blob([JSON.stringify(values)], {type: "application/json"}));
+        formData.append('file', inputRef.current.files[0])
+
+        axios.post("/administration/product/new", formData, config)
+            .then((response) => response.data)
+            .then((data) => {
+                console.log(data.id)
+                console.log(data.image.url)
+            })
+            .catch(console.error)
     }
+
+    //     saveProduct(values, token, file)
+    // }
 
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
@@ -128,12 +146,11 @@ export default function ProductAdministration() {
                     </RadioGroup>
                 </FormControl>
 
+                <input type="file" ref={inputRef}/>
                 <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
                     Speichern
                 </Button>
-                <p>{"Files: " + files.map(file => file.toString())}</p>
             </form>
-            <FileUploader setFiles={setFiles} files={files}/>
         </Box>
     )
 }

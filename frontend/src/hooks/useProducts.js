@@ -13,10 +13,10 @@ export default function useProducts() {
             .catch(err => console.log(err))
     }
 
-    const saveProduct = (product, token) => {
-        postProduct(product, token).then(response => response.data)
+    const saveProduct = (product, token, file) => {
+        postProduct(product, token, file).then(response => response.data)
     }
 
 
-    return {getAllProducts, products, saveProduct,}
+    return {getAllProducts, products, saveProduct}
 }

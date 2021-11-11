@@ -15,7 +15,8 @@ public class ProductBuilder {
     private final int MAX_RENTAL_CYCLE;
     private Location location;
     private double price;
-    private List<String> imageUrls;
+//    private List<Image> images;
+    private Image image;
 
 
     public ProductBuilder(String id, int MAX_RENTAL_CYCLE) {
@@ -53,12 +54,17 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+//    public ProductBuilder setImages(List<Image> images) {
+//        this.images = images;
+//        return this;
+//    }
+
+    public ProductBuilder setImage(Image image) {
+        this.image = image;
         return this;
     }
 
     public Product build() {
-        return new Product(id, title, description, amount, isAvailable, MAX_RENTAL_CYCLE, location, price, imageUrls);
+        return new Product(id, title, description, amount, isAvailable, MAX_RENTAL_CYCLE, location, price, image);
     }
 }

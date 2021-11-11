@@ -1,34 +1,46 @@
 package de.justuse.backend.controller;
 
-import de.justuse.backend.exceptions.InvalidObjectException;
+import de.justuse.backend.model.Image;
 import de.justuse.backend.model.Product;
+import de.justuse.backend.model.ProductDTO;
+import de.justuse.backend.service.CloudinaryService;
 import de.justuse.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/administration")
 public class AdminController {
 
     private final ProductService productService;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public AdminController(ProductService productService) {
+    public AdminController(ProductService productService, CloudinaryService cloudinaryService) {
         this.productService = productService;
+        this.cloudinaryService = cloudinaryService;
     }
 
-    @PostMapping("/product/new")
-    public Product addProductToDB(@RequestBody Product product) throws InvalidObjectException {
+    // for handcoded link in cloudinary upload
+//    @PostMapping("/product/new")
+//    public Product addProduct(@RequestBody ProductDTO productDTO){
+//        return productService.addProduct(productDTO);
+//    }
 
-        if(product.getMAX_RENTAL_CYCLE() != 0){
-            return productService.addProduct(product);
-        } else {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Trying to add new product with MAX_RENTAL_CYCLE = 0. MAX_RENTAL_CYCLE can't be 0");
+    @PostMapping("/product/new")
+    public Product addProduct(@RequestPart ProductDTO productDTO, @RequestPart(value = "file") Optional<MultipartFile> uploadFile) throws IOException {
+       Optional<Image> optionalImage = Optional.empty();
+        if (uploadFile.isPresent()) {
+            File fileToUpload = File.createTempFile("photo", null);
+            uploadFile.get().transferTo(fileToUpload);
+            Image image = cloudinaryService.uploadImage(fileToUpload);
+            optionalImage = Optional.of(image);
         }
+        return productService.addProduct(productDTO, optionalImage );
     }
 }
