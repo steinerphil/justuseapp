@@ -13,8 +13,14 @@ export default function useProducts() {
             .catch(err => console.log(err))
     }
 
-    const saveProduct = (product, token, file) => {
-        postProduct(product, token, file).then(response => response.data)
+    const saveProduct = (formData, token, config) => {
+        postProduct(formData, token, config)
+            .then((response) => response.data)
+            .then((data) => {
+                console.log(data.id)
+                console.log(data.image.url)
+            })
+            .catch(console.error)
     }
 
 

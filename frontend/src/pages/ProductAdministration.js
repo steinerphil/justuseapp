@@ -10,12 +10,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
-import axios from "axios";
+import useProducts from "../hooks/useProducts";
 
 
 export default function ProductAdministration() {
 
     const inputRef = useRef()
+    const {saveProduct} = useProducts()
 
     const token = localStorage.getItem("token")
 
@@ -37,28 +38,18 @@ export default function ProductAdministration() {
     function submitProduct(event) {
         event.preventDefault();
 
-        const formData = new FormData()
         const config = {
             headers: {
-                "Authorization": token,
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
             }
         }
-
+        const formData = new FormData()
         formData.append('productDTO', new Blob([JSON.stringify(values)], {type: "application/json"}));
         formData.append('file', inputRef.current.files[0])
 
-        axios.post("/administration/product/new", formData, config)
-            .then((response) => response.data)
-            .then((data) => {
-                console.log(data.id)
-                console.log(data.image.url)
-            })
-            .catch(console.error)
+        saveProduct(formData, token, config)
     }
-
-    //     saveProduct(values, token, file)
-    // }
 
     return (
         <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
