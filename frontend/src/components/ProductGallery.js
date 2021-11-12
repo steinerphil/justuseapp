@@ -44,9 +44,7 @@ export default function ProductGallery({products}) {
         height: listHeight(),
         margin: "3px 20px 3px 20px",
     }}>
-        {products.map(product => (
-            <ProductCard product={product} key={product.id}/>
-        ))}
+        {products.map(product => product.available && <ProductCard product={product} key={product.id}/> )}
     </ImageList>)
 
 }
