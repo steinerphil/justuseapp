@@ -4,13 +4,15 @@ import Button from '@mui/material/Button';
 import {useHistory} from "react-router-dom";
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
+import IconButton from "@mui/material/IconButton";
+import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 
 function Header() {
 
     const history = useHistory()
     const {logout} = useContext(AuthContext)
 
-    function handleHeaderPosition(){
+    function handleHeaderPosition() {
         return history.location.pathname !== "/";
     }
 
@@ -39,6 +41,10 @@ function Header() {
                                   onClick={() => {
                                       logout()
                                   }}>Logout</LogoutButton>
+                    <IconButton aria-label="edit" sx={{color: '#F05454'}}
+                                onClick={() => history.push("/administration/new")}>
+                        <SettingsTwoToneIcon/>
+                    </IconButton>
                 </ButtonContainer>
             )
         } else {
@@ -48,6 +54,10 @@ function Header() {
                                   onClick={() => {
                                       logout()
                                   }}>Logout</LogoutButton>
+                    <IconButton aria-label="edit" sx={{color: '#F05454'}}
+                                onClick={() => history.push("/administration/new")}>
+                        <SettingsTwoToneIcon/>
+                    </IconButton>
                 </ButtonContainer>
             )
         }
@@ -68,7 +78,7 @@ const HeaderContainer = styled.section`
   height: 75px;
   display: flex;
   align-items: center;
-  position: ${props => (props.positionFixed? "fixed" : "relative")};
+  position: ${props => (props.positionFixed ? "fixed" : "relative")};
   padding: 0 2%;
   top: 0;
   right: 0;

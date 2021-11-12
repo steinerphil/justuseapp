@@ -13,6 +13,7 @@ import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import {useHistory} from "react-router-dom";
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
+import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 
 const drawerWidth = 180;
 
@@ -30,7 +31,7 @@ export default function Sidebar() {
         } else {
             return {
                 "a": ['Suchen', 'Favoriten', 'Gemietet'],
-                "b": ["Account", "Logout"]
+                "b": ["Account", "Administration", "Logout"]
             }
         }
     }
@@ -39,6 +40,8 @@ export default function Sidebar() {
         switch (text){
             case "Login": return history.push("/login");
             case "Logout": return logout();
+            case "Administration": return history.push("/administration/new");
+            case "Suchen": return  history.push("/products/overview")
             default: return null;
         }
     }
@@ -87,6 +90,7 @@ export default function Sidebar() {
                             {
                                 {
                                     "Account": <AccountCircleTwoToneIcon/>,
+                                    "Administration":  <SettingsTwoToneIcon/>,
                                     "Login": <LockOpenTwoToneIcon/>,
                                     "Logout": <LockTwoToneIcon/>,
                                 }[text]
