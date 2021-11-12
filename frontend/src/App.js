@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Auth from "./pages/Auth";
 import ProductOverview from "./pages/ProductOverview";
 import ProductAdministration from "./pages/ProductAdministration";
+import PrivateRoute from "./routing/PrivateRoute";
 
 function App() {
 
@@ -27,9 +28,9 @@ function App() {
                 <Route exact path="/products/overview/">
                     <ProductOverview />
                 </Route>
-                <Route exact path="/administration/new/">
+                <PrivateRoute exact path="/administration/new/">
                     <ProductAdministration/>
-                </Route>
+                </PrivateRoute>
             </Switch>
         </div>
     );
