@@ -11,12 +11,13 @@ import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
 import useProducts from "../hooks/useProducts";
+import styled from "styled-components/macro";
 
 
 export default function ProductAdministration() {
 
     const inputRef = useRef()
-    const {saveProduct} = useProducts()
+    const {saveProduct, renderNavigation} = useProducts()
 
     const token = localStorage.getItem("token")
 
@@ -38,7 +39,7 @@ export default function ProductAdministration() {
     function submitProduct(event) {
         event.preventDefault();
 
-        const config = {
+        const headerConfig = {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",
@@ -48,100 +49,116 @@ export default function ProductAdministration() {
         formData.append('productDTO', new Blob([JSON.stringify(values)], {type: "application/json"}));
         formData.append('file', inputRef.current.files[0])
 
-        saveProduct(formData, token, config)
+        saveProduct(formData, headerConfig)
     }
 
     return (
-        <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
+        <>
+            {renderNavigation()}
+            <Box sx={{display: 'flex'}}>
+                <style>{'position:fixed; width:100%'}</style>
 
-            <form onSubmit={submitProduct}>
+                <Wrapper>
+                    <Form onSubmit={submitProduct}>
 
-                <TextField
-                    label="Titel"
-                    id="outlined-multiline-static"
-                    sx={{m: 1, width: '25ch'}}
-                    value={values.title}
-                    onChange={handleChange('title')}
-                    required={true}
-                />
+                        <TextField
+                            label="Titel"
+                            id="outlined-multiline-static"
+                            sx={{m: 1, width: '25ch'}}
+                            value={values.title}
+                            onChange={handleChange('title')}
+                            required={true}
+                        />
 
-                <TextField
-                    id="outlined-multiline-static"
-                    label="Produktbeschreibung"
-                    multiline
-                    rows={4}
-                    value={values.description}
-                    onChange={handleChange('description')}
-                    required={true}
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Produktbeschreibung"
+                            multiline
+                            rows={4}
+                            value={values.description}
+                            onChange={handleChange('description')}
+                            required={true}
 
-                />
+                        />
 
-                <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <OutlinedInput
-                        id="outlined-adornment"
-                        placeholder="Anzahl"
-                        value={values.amount}
-                        onChange={handleChange('amount')}
-                        endAdornment={<InputAdornment position="end">Stück</InputAdornment>}
+                        <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
+                            <OutlinedInput
+                                id="outlined-adornment"
+                                placeholder="Anzahl"
+                                value={values.amount}
+                                onChange={handleChange('amount')}
+                                endAdornment={<InputAdornment position="end">Stück</InputAdornment>}
 
-                    />
-                </FormControl>
+                            />
+                        </FormControl>
 
-                <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <OutlinedInput
-                        id="outlined-adornment"
-                        placeholder="max. Mietdauer"
-                        value={values.MAX_RENTAL_CYCLE}
-                        onChange={handleChange('MAX_RENTAL_CYCLE')}
-                        endAdornment={<InputAdornment position="end">Monate</InputAdornment>}
+                        <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
+                            <OutlinedInput
+                                id="outlined-adornment"
+                                placeholder="max. Mietdauer"
+                                value={values.MAX_RENTAL_CYCLE}
+                                onChange={handleChange('MAX_RENTAL_CYCLE')}
+                                endAdornment={<InputAdornment position="end">Monate</InputAdornment>}
 
-                    />
-                </FormControl>
+                            />
+                        </FormControl>
 
-                <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <OutlinedInput
-                        id="outlined-adornment"
-                        placeholder="Preis"
-                        value={values.price}
-                        onChange={handleChange('price')}
-                        endAdornment={<InputAdornment position="end">€</InputAdornment>}
+                        <FormControl required={true} sx={{m: 1, width: '25ch'}} variant="outlined">
+                            <OutlinedInput
+                                id="outlined-adornment"
+                                placeholder="Preis"
+                                value={values.price}
+                                onChange={handleChange('price')}
+                                endAdornment={<InputAdornment position="end">€</InputAdornment>}
 
-                    />
-                </FormControl>
+                            />
+                        </FormControl>
 
-                <FormControl required={true} sx={{m: 1, width: '25ch'}}>
-                    <InputLabel id="demo-simple-select-required-label">Standort</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-required-label"
-                        id="demo-simple-select-required"
-                        value={values.location}
-                        onChange={handleChange("location")}
-                        label="Standort *"
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value="MÜNCHEN">München</MenuItem>
-                        <MenuItem value="BERLIN">Berlin</MenuItem>
-                        <MenuItem value="HAMBURG">Hamburg</MenuItem>
-                    </Select>
-                </FormControl>
+                        <FormControl required={true} sx={{m: 1, width: '25ch'}}>
+                            <InputLabel id="demo-simple-select-required-label">Standort</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-required-label"
+                                id="demo-simple-select-required"
+                                value={values.location}
+                                onChange={handleChange("location")}
+                                label="Standort *"
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value="MÜNCHEN">München</MenuItem>
+                                <MenuItem value="BERLIN">Berlin</MenuItem>
+                                <MenuItem value="HAMBURG">Hamburg</MenuItem>
+                            </Select>
+                        </FormControl>
 
-                <FormControl component="fieldset">
-                    <FormLabel component="legend">Verfügbar?</FormLabel>
-                    <RadioGroup row defaultValue="true"
-                                value={values.isAvailable}
-                                onChange={handleChange('isAvailable')}>
-                        <FormControlLabel value="true" control={<Radio/>} label="Ja" labelPlacement="start"/>
-                        <FormControlLabel value="false" control={<Radio/>} label="Nein" labelPlacement="start"/>
-                    </RadioGroup>
-                </FormControl>
+                        <FormControl component="fieldset">
+                            <FormLabel component="legend">Verfügbar?</FormLabel>
+                            <RadioGroup row defaultValue="true"
+                                        value={values.isAvailable}
+                                        onChange={handleChange('isAvailable')}>
+                                <FormControlLabel value="true" control={<Radio/>} label="Ja" labelPlacement="start"/>
+                                <FormControlLabel value="false" control={<Radio/>} label="Nein" labelPlacement="start"/>
+                            </RadioGroup>
+                        </FormControl>
 
-                <input type="file" ref={inputRef}/>
-                <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
-                    Speichern
-                </Button>
-            </form>
-        </Box>
+                        <input type="file" ref={inputRef}/>
+                        <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
+                            Speichern
+                        </Button>
+                    </Form>
+                </Wrapper>
+            </Box>
+        </>
     )
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`

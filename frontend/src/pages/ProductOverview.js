@@ -51,6 +51,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 75px;
+  
+  @media(max-width: 500px){
+    margin-top: 47px;
+  }
 `
 const StyledTextField = styled(TextField)`
     &&{

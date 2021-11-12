@@ -8,13 +8,12 @@ import axios from 'axios';
 //     }
 // }
 
-//do no need token because route is not protected
 export function getProducts() {
     return axios.get("/api/products").then(response => response.data)
 }
 
-export function postProduct(formData, token, config) {
-    return axios.post("/administration/product/new", formData, config)
+export function postProduct(formData, headerConfig) {
+    return axios.post("/administration/product/new", formData, headerConfig)
 
 }
 

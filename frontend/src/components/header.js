@@ -10,6 +10,10 @@ function Header() {
     const history = useHistory()
     const {logout} = useContext(AuthContext)
 
+    function handleHeaderPosition(){
+        return history.location.pathname !== "/";
+    }
+
 
     function loadButtons() {
         if (!localStorage.getItem("token") && history.location.pathname === "/products/overview") {
@@ -50,7 +54,7 @@ function Header() {
     }
 
     return (
-        <HeaderContainer>
+        <HeaderContainer positionFixed={handleHeaderPosition()}>
             <Logo src={logo} onClick={() => history.push("/")} alt="logo"/>
             {loadButtons()}
         </HeaderContainer>
@@ -64,7 +68,11 @@ const HeaderContainer = styled.section`
   height: 75px;
   display: flex;
   align-items: center;
+  position: ${props => (props.positionFixed? "fixed" : "relative")};
   padding: 0 2%;
+  top: 0;
+  right: 0;
+  left: 0;
 
   @media (max-width: 500px) {
     height: 47px;
