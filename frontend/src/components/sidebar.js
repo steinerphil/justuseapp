@@ -31,7 +31,7 @@ export default function Sidebar() {
         } else {
             return {
                 "a": ['Suchen', 'Favoriten', 'Gemietet'],
-                "b": ["Account", "Administration", "Logout"]
+                "b": ["Account", "Admin", "Logout"]
             }
         }
     }
@@ -40,7 +40,7 @@ export default function Sidebar() {
         switch (text){
             case "Login": return history.push("/login");
             case "Logout": return logout();
-            case "Administration": return history.push("/administration/new");
+            case "Admin": return history.push("/administration/new");
             case "Suchen": return  history.push("/products/overview")
             default: return null;
         }
@@ -90,7 +90,7 @@ export default function Sidebar() {
                             {
                                 {
                                     "Account": <AccountCircleTwoToneIcon/>,
-                                    "Administration":  <SettingsTwoToneIcon/>,
+                                    "Admin":  <SettingsTwoToneIcon/>,
                                     "Login": <LockOpenTwoToneIcon/>,
                                     "Logout": <LockTwoToneIcon/>,
                                 }[text]

@@ -42,7 +42,7 @@ export default function ProductGallery({products}) {
     }} sx={{
         width: "auto",
         height: listHeight(),
-        margin: "3px 3px 3px 0",
+        margin: "3px 20px 3px 20px",
     }}>
         {products.map(product => (
             <ProductCard product={product} key={product.id}/>
