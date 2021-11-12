@@ -37,7 +37,7 @@ export default function ProductOverview() {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <style>{'body {background-color:#DDDDDD; position:fixed; width:100%'}</style>
+            <style>{'position:fixed; width:100%'}</style>
             {renderNavigation()}
             <Wrapper>
                 <StyledTextField id="outlined-search" label="Wonach suchst du?" type="search" onInput={search}/>
@@ -51,6 +51,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 75px;
+  
+  @media(max-width: 500px){
+    margin-top: 47px;
+  }
 `
 const StyledTextField = styled(TextField)`
     &&{

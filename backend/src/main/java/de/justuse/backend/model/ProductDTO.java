@@ -3,16 +3,15 @@ package de.justuse.backend.model;
 import de.justuse.backend.enums.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@Document("products")
-public class Product {
+public class ProductDTO {
 
-    private final String id;
     private String title;
     private String description;
     private int amount;
@@ -20,6 +19,7 @@ public class Product {
     private final int MAX_RENTAL_CYCLE;
     private Location location;
     private double price;
-    private Image image;
+
 
 }
+

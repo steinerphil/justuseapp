@@ -2,15 +2,15 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import InfoIcon from '@mui/icons-material/Info';
 
-export default function ProductCard({product: {imageUrls, title, price, available}}) {
+export default function ProductCard({product: {title, price, available, image:{url}}}) {
 
 
 
     return (
-            <ImageListItem key={imageUrls[0]} sx={{ minWidth: 235, height: "fit-content"}} style={{height: "fit-content"}}>
+            <ImageListItem key={url} sx={{ minWidth: 235, maxWidth: 370, height: "fit-content", boxSizing: "border-box", border: "1px solid lightgrey"}} style={{height: "fit-content"}}>
                 <img
-                    src={`${imageUrls[0]}?w=248&fit=crop&auto=format`}
-                    srcSet={`${imageUrls[0]}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    src={url}
+                    srcSet={url}
                     alt={title}
                     loading="lazy"
                 />
