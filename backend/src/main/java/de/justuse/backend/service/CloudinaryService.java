@@ -41,7 +41,7 @@ public class CloudinaryService {
                 "api_secret", apiSecret,
                 "secure", true
         ));
-        String url = uploadResult.get("url").toString();
+        String url = uploadResult.get("secure_url").toString();
         String public_id = uploadResult.get("public_id").toString();
         return (new Image(public_id, url));
     }
