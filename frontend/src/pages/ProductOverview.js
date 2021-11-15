@@ -37,7 +37,7 @@ export default function ProductOverview() {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <style>{'position:fixed; width:100%'}</style>
+            <style>{'body {position:fixed; width:100%}'}</style>
             {renderNavigation()}
             <Wrapper>
                 <StyledTextField id="outlined-search" label="Wonach suchst du?" type="search" onInput={search}/>
