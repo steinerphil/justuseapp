@@ -1,9 +1,6 @@
 package de.justuse.backend.controller;
 
-import de.justuse.backend.model.DeleteProductDTO;
-import de.justuse.backend.model.Image;
-import de.justuse.backend.model.Product;
-import de.justuse.backend.model.ProductDTO;
+import de.justuse.backend.model.*;
 import de.justuse.backend.service.CloudinaryService;
 import de.justuse.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +37,8 @@ public class AdminController {
     }
 
     @DeleteMapping("product/delete")
-    public void deleteProducts(@RequestBody DeleteProductDTO requestBody){
-     String[] productsToRemove = requestBody.getData();
+    public void deleteProducts(@RequestBody DeleteProductDTO requestBody) throws IOException {
+     DeleteProductApiDTO[] productsToRemove = requestBody.getData();
         productService.deleteProducts(productsToRemove);
     }
 }

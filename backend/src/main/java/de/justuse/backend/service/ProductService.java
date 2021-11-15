@@ -1,15 +1,13 @@
 package de.justuse.backend.service;
 
 import de.justuse.backend.exceptions.InvalidObjectException;
-import de.justuse.backend.model.Image;
-import de.justuse.backend.model.Product;
-import de.justuse.backend.model.ProductBuilder;
-import de.justuse.backend.model.ProductDTO;
+import de.justuse.backend.model.*;
 import de.justuse.backend.repository.ImageDAO;
 import de.justuse.backend.repository.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +15,14 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductDAO productRepo;
+    private final CloudinaryService cloudinaryService;
 
 
 
     @Autowired
-    public ProductService(ProductDAO productRepo, ImageDAO imageDAO, CloudinaryService cloudinaryService) {
+    public ProductService(ProductDAO productRepo, ImageDAO imageDAO, CloudinaryService cloudinaryService, CloudinaryService cloudinaryService1) {
         this.productRepo = productRepo;
+        this.cloudinaryService = cloudinaryService1;
     }
 
 
@@ -85,9 +85,13 @@ public class ProductService {
     }
 
 
-    public void deleteProducts(String[] productIds) {
-        for (String id: productIds) {
-            productRepo.deleteById(id);
+    public void deleteProducts(DeleteProductApiDTO[] products) throws IOException {
+        for (DeleteProductApiDTO product: products) {
+            String productId = product.getProductId();
+            String imageId = product.getImageId();
+
+            cloudinaryService.removeImage(imageId);
+            productRepo.deleteById(productId);
         }
     }
 }

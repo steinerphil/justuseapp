@@ -20,6 +20,8 @@ export default function RemoveProducts() {
 
     function handleDelete() {
 
+
+
         let requestBody = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -28,8 +30,11 @@ export default function RemoveProducts() {
         }
 
         for (let i = 0; i < selectionModel.length; i++) {
-            requestBody.data.productsToRemove.push(selectionModel[i])
+
+           const actualProduct = products.filter((element) => element.id.includes(selectionModel[i]))
+            requestBody.data.productsToRemove.push({productId: actualProduct[0].id, imageId: actualProduct[0].image.id})
         }
+        console.log(requestBody)
         removeProduct(requestBody)
     }
 
