@@ -1,10 +1,11 @@
 import {DataGrid} from "@mui/x-data-grid";
 
-export const Table = ({tableData}) => {
+export const Table = ({tableData, selectionModel, setSelectionModel}) => {
+
 
     const columns = [
         {field: 'id', headerName: 'ID', width: 200},
-        {field: 'title', headerName: 'Titel', width: 180},
+        {field: 'title', headerName: 'Produktname', width: 180},
         {field: 'price', headerName: 'Preis', type: 'number', width: 110},
     ];
 
@@ -20,7 +21,11 @@ export const Table = ({tableData}) => {
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    checkboxSelection //handle checked
+                    checkboxSelection
+                    onSelectionModelChange={(newSelectionModel) => {
+                        setSelectionModel(newSelectionModel);
+                    }}
+                    selectionModel={selectionModel}
                 />
             </div>
         </>

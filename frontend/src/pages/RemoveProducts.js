@@ -1,25 +1,31 @@
 import useProducts from "../hooks/useProducts";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components/macro";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Table} from "../components/Table";
 
-export default function DeleteProducts() {
+export default function RemoveProducts() {
 
-    const {products, getAllProducts} = useProducts()
+    const {products, removeProduct} = useProducts()
     const [productData, setProductData] = useState([])
-
-    useEffect(() => {
-        getAllProducts()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const [selectionModel, setSelectionModel] = useState([]);
 
     const handleChange = (event) => {
         setProductData(
             products.filter((element) => {
-                return (element.title.toLowerCase().includes(event.target.value.toLowerCase()))})
+                return (element.title.toLowerCase().includes(event.target.value.toLowerCase()))
+            })
         )
     };
+
+    function handleDelete() {
+        let urlString = "?"
+        for (let i = 0; i < selectionModel.length; i++) {
+            urlString = `${urlString}product${i}=${selectionModel[i]}&`
+        }
+        urlString = urlString.substr(0,urlString.length-1)
+        removeProduct(urlString)
+    }
 
 
     return (
@@ -27,14 +33,15 @@ export default function DeleteProducts() {
             <Headline>Produkt löschen</Headline>
             <Form>
                 <TextField
-                    label="Produktnummer"
+                    label="Produktname"
                     id="outlined-multiline-static"
                     sx={{m: 1, width: '30ch'}}
                     onChange={handleChange}
                     required={true}
                 />
             </Form>
-            <Table tableData={productData}/>
+            <Table tableData={productData} selectionModel={selectionModel} setSelectionModel={setSelectionModel}/>
+            <button onClick={handleDelete}>delete selected product(s)</button>
         </Wrapper>
 
     )
@@ -54,7 +61,7 @@ const Form = styled.form`
 `
 const Wrapper = styled.div`
 
-    display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

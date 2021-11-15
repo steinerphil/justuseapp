@@ -7,7 +7,7 @@ import Auth from "./pages/Auth";
 import ProductOverview from "./pages/ProductOverview";
 import ProductAdministration from "./pages/ProductAdministration";
 import PrivateRoute from "./routing/PrivateRoute";
-import DeleteProducts from "./pages/DeleteProducts";
+import RemoveProducts from "./pages/RemoveProducts";
 
 function App() {
 
@@ -33,7 +33,7 @@ function App() {
                     <ProductAdministration/>
                 </PrivateRoute>
                 <PrivateRoute exact path="/administration/delete/">
-                    <DeleteProducts/>
+                    <RemoveProducts/>
                 </PrivateRoute>
             </Switch>
         </div>
