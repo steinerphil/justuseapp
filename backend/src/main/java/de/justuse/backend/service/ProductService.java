@@ -85,4 +85,9 @@ public class ProductService {
     }
 
 
+    public void deleteProducts(String[] productIds) {
+        for (String id: productIds) {
+            productRepo.deleteById(id);
+        }
+    }
 }

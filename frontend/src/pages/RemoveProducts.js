@@ -19,12 +19,18 @@ export default function RemoveProducts() {
     };
 
     function handleDelete() {
-        let urlString = "?"
-        for (let i = 0; i < selectionModel.length; i++) {
-            urlString = `${urlString}product${i}=${selectionModel[i]}&`
+
+        let requestBody = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            data: {productsToRemove: []}
         }
-        urlString = urlString.substr(0,urlString.length-1)
-        removeProduct(urlString)
+
+        for (let i = 0; i < selectionModel.length; i++) {
+            requestBody.data.productsToRemove.push(selectionModel[i])
+        }
+        removeProduct(requestBody)
     }
 
 

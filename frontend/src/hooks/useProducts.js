@@ -27,8 +27,8 @@ export default function useProducts() {
             .catch(console.error)
     }
 
-    const removeProduct = (urlParams) => {
-        deleteProduct(urlParams)
+    const removeProduct = (requestBody) => {
+        deleteProduct(requestBody)
     }
 
     function renderNavigation() {
