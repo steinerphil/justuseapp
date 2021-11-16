@@ -1,28 +1,45 @@
 import useProducts from "../hooks/useProducts";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components/macro";
-import {useState} from "react";
-import {Table} from "../components/Table";
+import {useEffect, useState} from "react";
+import {DataGrid} from "@mui/x-data-grid";
 
 export default function RemoveProducts() {
 
-    const {products, removeProduct} = useProducts()
-    const [productData, setProductData] = useState([])
+    const {products, removeProducts} = useProducts()
+    const [searchString, setSearchString] = useState("")
     const [selectionModel, setSelectionModel] = useState([]);
+    const [tableData, setTableData] = useState([])
 
-    const handleChange = (event) => {
-        setProductData(
-            products.filter((element) => {
-                return (element.title.toLowerCase().includes(event.target.value.toLowerCase()))
-            })
-        )
-    };
+    const columns = [
+        {field: 'id', headerName: 'ID', width: 200},
+        {field: 'title', headerName: 'Produktname', width: 180},
+        {field: 'price', headerName: 'Preis', type: 'number', width: 110},
+    ];
 
-    function handleDelete() {
+    const search = (action) => {
+        let string = action.target.value;
+        setSearchString(string)
+    }
+
+    useEffect(() =>
+            setTableData(handleProducts)
+        // eslint-disable-next-line
+        , [products, searchString])
+
+    const handleProducts = products.filter((element) => {
+        return element.title.toLowerCase().includes(searchString.toLowerCase())
+    })
+
+    const state = tableData.filter((element) => {
+        return (!selectionModel.includes(element.id))
+    })
 
 
+    function handleDelete(event) {
+        event.preventDefault();
 
-        let requestBody = {
+        const requestBody = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -30,29 +47,42 @@ export default function RemoveProducts() {
         }
 
         for (let i = 0; i < selectionModel.length; i++) {
-
-           const actualProduct = products.filter((element) => element.id.includes(selectionModel[i]))
+            const actualProduct = products.filter((element) => element.id.includes(selectionModel[i]))
             requestBody.data.productsToRemove.push({productId: actualProduct[0].id, imageId: actualProduct[0].image.id})
         }
-        console.log(requestBody)
-        removeProduct(requestBody)
-    }
 
+        setTableData(state)
+
+        removeProducts(requestBody)
+    }
 
     return (
         <Wrapper>
             <Headline>Produkt löschen</Headline>
-            <Form>
+            <Form onSubmit={handleDelete}>
                 <TextField
                     label="Produktname"
                     id="outlined-multiline-static"
                     sx={{m: 1, width: '30ch'}}
-                    onChange={handleChange}
-                    required={true}
+                    onChange={search}
+                    required={false}
                 />
+
+                <div style={{height: 400, minWidth: 600, maxWidth: 680}}>
+                    <DataGrid
+                        rows={tableData}
+                        columns={columns}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
+                        checkboxSelection
+                        onSelectionModelChange={(newSelectionModel) => {
+                            setSelectionModel(newSelectionModel);
+                        }}
+                        selectionModel={selectionModel}
+                    />
+                </div>
+                <button type="submit">delete selected product(s)</button>
             </Form>
-            <Table tableData={productData} selectionModel={selectionModel} setSelectionModel={setSelectionModel}/>
-            <button onClick={handleDelete}>delete selected product(s)</button>
         </Wrapper>
 
     )
