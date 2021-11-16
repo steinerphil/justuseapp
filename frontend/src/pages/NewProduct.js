@@ -53,7 +53,6 @@ export default function NewProduct() {
 
     return (
         <Box sx={{display: 'flex'}}>
-            {/*<style>{'position:fixed; width:100%'}</style>*/}
             {renderNavigation()}
             <Wrapper>
                 <Headline>Neues Produkt Anlegen</Headline>

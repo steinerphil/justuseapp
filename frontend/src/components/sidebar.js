@@ -40,7 +40,7 @@ export default function Sidebar() {
         switch (text){
             case "Login": return history.push("/login");
             case "Logout": return logout();
-            case "Admin": return history.push("/administration/new");
+            case "Admin": return history.push("/administration");
             case "Suchen": return  history.push("/products/overview")
             default: return null;
         }
