@@ -93,6 +93,11 @@ const Wrapper = styled.div`
   justify-content: center;
   margin: 75px 2.5% 0 2.5%;
   width: 100%;
+
+  @media (max-width: 500px) {
+    margin-top: 47px;
+    margin-bottom: 65px;
+  }
 `
 
 const Content = styled.div`
