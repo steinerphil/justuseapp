@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 @Slf4j
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
@@ -29,6 +31,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         log.error("Invalid Object Exception was thrown", e);
         ApiError apiError = new ApiError("given object is not valid", e.getMessage());
          return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ApiError> handleNoSuchElementException(NoSuchElementException e){
+        log.error("NoSuchElementException was thrown", e);
+        ApiError apiError = new ApiError("element not found.", e.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
 }

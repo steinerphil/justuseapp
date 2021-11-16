@@ -19,7 +19,7 @@ export default function ProductAdministration() {
             <ButtonDiv onClick={() => history.push("/administration/delete")}>
                 <p>Produkt löschen</p>
             </ButtonDiv>
-            <ButtonDiv onClick={() => history.push("/administration/edit")}>
+            <ButtonDiv onClick={() => history.push("/administration/edit/1")}>
                 <p>Produkt bearbeiten</p>
             </ButtonDiv>
         </Wrapper>
@@ -35,6 +35,10 @@ const Wrapper = styled.div`
   text-align: center;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 500px) {
+    margin-top: 47px;
+  }
 `
 
 const Headline = styled.p`

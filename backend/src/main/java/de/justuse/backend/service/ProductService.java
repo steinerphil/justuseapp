@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -87,5 +88,12 @@ public class ProductService {
             cloudinaryService.removeImage(imageId);
             productRepo.deleteById(productId);
         }
+    }
+
+    public Product getById(String id) {
+        if (productRepo.findById(id).isEmpty()){
+            throw new NoSuchElementException("Product not found. Id: " + id);
+        }
+        return productRepo.findById(id).get();
     }
 }

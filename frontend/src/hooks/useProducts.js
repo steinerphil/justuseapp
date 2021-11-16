@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {deleteProduct, getProducts, postProduct} from "../service/productApiService";
+import {deleteProduct, getProductById, getProducts, postProduct} from "../service/productApiService";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
 
@@ -13,6 +13,10 @@ export default function useProducts() {
                 setProducts(data)
             })
             .catch(err => console.log(err))
+    }
+
+    const getById = (id) =>{
+        getProductById(id)
     }
 
     useEffect(() => getAllProducts(), [])
@@ -36,5 +40,5 @@ export default function useProducts() {
     }
 
 
-    return {getAllProducts, products, saveProduct, renderNavigation, removeProducts}
+    return {getAllProducts, products, saveProduct, renderNavigation, removeProducts, getById}
 }

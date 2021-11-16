@@ -10,7 +10,7 @@ import PrivateRoute from "./routing/PrivateRoute";
 import RemoveProducts from "./pages/RemoveProducts";
 import NewProduct from "./pages/NewProduct";
 import EditProduct from "./pages/EditProduct";
-import EditProduct2 from "./pages/EditProduct2";
+import EditProductTwo from "./pages/EditProductTwo";
 
 function App() {
 
@@ -45,7 +45,7 @@ function App() {
                     <EditProduct/>
                 </PrivateRoute>
                 <PrivateRoute exact path="/administration/edit/2">
-                    <EditProduct2/>
+                    <EditProductTwo/>
                 </PrivateRoute>
             </Switch>
         </div>
