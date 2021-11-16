@@ -16,7 +16,7 @@ export default function useProducts() {
     }
 
     const getById = (id) =>{
-        getProductById(id)
+        return getProductById(id).then(res => res.data)
     }
 
     useEffect(() => getAllProducts(), [])
@@ -24,7 +24,7 @@ export default function useProducts() {
     const saveProduct = (formData, headerConfig) => {
         postProduct(formData, headerConfig)
             .then((response) => response.data)
-            .catch(console.error)
+            .catch(err => console.log(err))
     }
 
     const removeProducts = (requestBody) => {
