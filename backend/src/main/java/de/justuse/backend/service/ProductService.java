@@ -34,19 +34,13 @@ public class ProductService {
             e.printStackTrace();
         }
 
-//        if (productDTO.getFile() == null) {
-//            imagesToSave = new Image("default", "https://res.cloudinary.com/dlxgg8z5j/image/upload/c_scale,h_961,w_961/v1636450556/Platzhalter_feyjl8.png");
-//        } else {
-//            imagesToSave = uploadFiles(productDTO.getFile());
-//        }
-
         Product product = new ProductBuilder(null, productDTO.getMAX_RENTAL_CYCLE())
                 .setTitle(productDTO.getTitle())
                 .setDescription(productDTO.getDescription())
                 .setAmount(productDTO.getAmount())
                 .setPrice(productDTO.getPrice())
                 .setLocation(productDTO.getLocation())
-                .setImage(optionalImage.orElse(null))
+                .setImage(optionalImage.orElse(new Image("default", "https://res.cloudinary.com/dlxgg8z5j/image/upload/v1637089746/defaultImage_yvhfrd.png")))
                 .setIsAvailable(productDTO.isAvailable())
                 .build();
         return productRepo.save(product);
