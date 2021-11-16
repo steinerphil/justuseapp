@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// const getHeader = (token) => {
+// const getHeader = () => {
 //     return {
 //         headers: {
-//             Authorization: `Bearer ${token}`,
+//             Authorization: `Bearer ${localStorage.getItem("token")}`,
 //         },
 //     }
 // }
@@ -14,7 +14,10 @@ export function getProducts() {
 
 export function postProduct(formData, headerConfig) {
     return axios.post("/administration/product/new", formData, headerConfig)
+}
 
+export function deleteProduct(requestBody){
+    return axios.delete("/administration/product/delete", requestBody)
 }
 
 

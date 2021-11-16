@@ -7,6 +7,8 @@ import Auth from "./pages/Auth";
 import ProductOverview from "./pages/ProductOverview";
 import ProductAdministration from "./pages/ProductAdministration";
 import PrivateRoute from "./routing/PrivateRoute";
+import RemoveProducts from "./pages/RemoveProducts";
+import NewProduct from "./pages/NewProduct";
 
 function App() {
 
@@ -28,8 +30,14 @@ function App() {
                 <Route exact path="/products/overview/">
                     <ProductOverview />
                 </Route>
-                <PrivateRoute exact path="/administration/new/">
+                <PrivateRoute exact path="/administration">
                     <ProductAdministration/>
+                </PrivateRoute>
+                <PrivateRoute exact path="/administration/new/">
+                    <NewProduct/>
+                </PrivateRoute>
+                <PrivateRoute exact path="/administration/delete/">
+                    <RemoveProducts/>
                 </PrivateRoute>
             </Switch>
         </div>

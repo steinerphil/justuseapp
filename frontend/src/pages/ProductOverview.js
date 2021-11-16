@@ -1,5 +1,5 @@
 import useProducts from "../hooks/useProducts";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Sidebar from "../components/sidebar";
 import BottomNavi from "../components/BottomNavi";
 import Box from "@mui/material/Box";
@@ -10,13 +10,8 @@ import ProductGallery from "../components/ProductGallery";
 
 export default function ProductOverview() {
 
-    const {products, getAllProducts} = useProducts()
+    const {products} = useProducts()
     const [searchString, setSearchString] = useState("")
-
-    useEffect(() => {
-        getAllProducts()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     function renderNavigation() {
         if (window.innerWidth > 500) {

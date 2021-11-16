@@ -31,8 +31,6 @@ public class CloudinaryService {
             "secure", true));
 
     public Image uploadImage(File fileToUpload) throws IOException {
-
-
         Map uploadResult = cloudinary.uploader().upload(fileToUpload, ObjectUtils.asMap(
                 "eager", Arrays.asList(
                         new EagerTransformation().width(961).height(961).crop("fit")),
@@ -44,5 +42,14 @@ public class CloudinaryService {
         String url = uploadResult.get("secure_url").toString();
         String public_id = uploadResult.get("public_id").toString();
         return (new Image(public_id, url));
+    }
+
+    public void removeImage(String imageId) throws IOException {
+        cloudinary.uploader().destroy(imageId, ObjectUtils.asMap(
+                "cloud_name", cloudName,
+                "api_key", apiKey,
+                "api_secret", apiSecret,
+                "secure", true
+        ));
     }
 }

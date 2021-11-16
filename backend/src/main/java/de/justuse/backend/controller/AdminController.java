@@ -1,8 +1,6 @@
 package de.justuse.backend.controller;
 
-import de.justuse.backend.model.Image;
-import de.justuse.backend.model.Product;
-import de.justuse.backend.model.ProductDTO;
+import de.justuse.backend.model.*;
 import de.justuse.backend.service.CloudinaryService;
 import de.justuse.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +24,6 @@ public class AdminController {
         this.cloudinaryService = cloudinaryService;
     }
 
-    // for handcoded link in cloudinary upload
-//    @PostMapping("/product/new")
-//    public Product addProduct(@RequestBody ProductDTO productDTO){
-//        return productService.addProduct(productDTO);
-//    }
-
     @PostMapping("/product/new")
     public Product addProduct(@RequestPart ProductDTO productDTO, @RequestPart(value = "file") Optional<MultipartFile> uploadFile) throws IOException {
        Optional<Image> optionalImage = Optional.empty();
@@ -42,5 +34,11 @@ public class AdminController {
             optionalImage = Optional.of(image);
         }
         return productService.addProduct(productDTO, optionalImage );
+    }
+
+    @DeleteMapping("product/delete")
+    public void deleteProducts(@RequestBody DeleteProductDTO requestBody) throws IOException {
+     DeleteProductApiDTO[] productsToRemove = requestBody.getData();
+        productService.deleteProducts(productsToRemove);
     }
 }

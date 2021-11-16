@@ -2,7 +2,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import InfoIcon from '@mui/icons-material/Info';
 
-export default function ProductCard({product: {title, price, available, image:{url}}}) {
+export default function ProductCard({product: {title, price, available, image:{url, id}}}) {
 
 
 
@@ -13,6 +13,7 @@ export default function ProductCard({product: {title, price, available, image:{u
                     srcSet={url}
                     alt={title}
                     loading="lazy"
+                    id={id}
                 />
                 <ImageListItemBar
                     title={title}
