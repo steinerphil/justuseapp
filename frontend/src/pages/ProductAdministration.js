@@ -19,7 +19,7 @@ export default function ProductAdministration() {
             <ButtonDiv onClick={() => history.push("/administration/delete")}>
                 <p>Produkt löschen</p>
             </ButtonDiv>
-            <ButtonDiv>
+            <ButtonDiv onClick={() => history.push("/administration/edit")}>
                 <p>Produkt bearbeiten</p>
             </ButtonDiv>
         </Wrapper>
