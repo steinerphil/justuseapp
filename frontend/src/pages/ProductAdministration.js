@@ -1,12 +1,16 @@
 import {useHistory} from "react-router-dom";
 import styled from "styled-components/macro";
+import useProducts from "../hooks/useProducts";
 
 
 export default function ProductAdministration() {
 
+    const {renderNavigation} = useProducts()
     const history = useHistory()
 
     return (
+        <Content>
+            {renderNavigation()}
         <Wrapper>
             <Headline>Wähle eine Aktion aus:</Headline>
             <ButtonDiv onClick={() => history.push("/administration/new")}>
@@ -19,7 +23,7 @@ export default function ProductAdministration() {
                 <p>Produkt bearbeiten</p>
             </ButtonDiv>
         </Wrapper>
-
+        </Content>
 
     )
 }
@@ -53,4 +57,8 @@ const ButtonDiv = styled.div`
     background-color: #30475E;
     color: white;
   }
+`
+const Content = styled.div`
+  display: flex;
+  justify-content: center;
 `
