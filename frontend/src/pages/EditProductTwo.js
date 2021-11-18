@@ -23,7 +23,7 @@ export default function EditProductTwo() {
         location: '',
         price: '',
         available: null,
-        max_RENTAL_CYCLE: '',
+        maxRentalCycle: '',
         image: {
             id: '',
             url: '',
@@ -63,7 +63,7 @@ export default function EditProductTwo() {
                 },
             }
 
-            const formData = new FormData;
+            const formData = new FormData();
             formData.append("product", new Blob([JSON.stringify(newProductData)], {type: "application/json"}));
             formData.append("file", inputRef.current.files[0]);
 
@@ -117,8 +117,8 @@ export default function EditProductTwo() {
                         <OutlinedInput
                             id="outlined-adornment"
                             placeholder="max. Mietdauer"
-                            value={newProductData.max_RENTAL_CYCLE}
-                            onChange={handleChange('max_RENTAL_CYCLE')}
+                            value={newProductData.maxRentalCycle}
+                            onChange={handleChange('maxRentalCycle')}
                             endAdornment={<InputAdornment position="end">Monate</InputAdornment>}
                         />
                     </FormControl>

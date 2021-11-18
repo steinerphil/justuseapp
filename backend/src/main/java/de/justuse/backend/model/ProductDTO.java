@@ -13,8 +13,8 @@ public class ProductDTO {
     private String title;
     private String description;
     private int amount;
-    private boolean isAvailable;
-    private int MAX_RENTAL_CYCLE;
+    private boolean available;
+    private int maxRentalCycle;
     private Location location;
     private double price;
 

@@ -83,6 +83,7 @@ const HeaderContainer = styled.section`
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1;
 
   @media (max-width: 500px) {
     height: 47px;

@@ -25,10 +25,10 @@ public class Product {
     private int amount;
 
     @NonNull
-    private boolean isAvailable;
+    private boolean available;
 
     @NonNull
-    private final int MAX_RENTAL_CYCLE;
+    private int maxRentalCycle;
 
     @NonNull
     private Location location;

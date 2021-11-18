@@ -26,8 +26,8 @@ export default function NewProduct() {
         amount: '',
         location: '',
         price: '',
-        isAvailable: true,
-        MAX_RENTAL_CYCLE: '',
+        available: true,
+        maxRentalCycle: '',
     });
 
 
@@ -94,8 +94,8 @@ export default function NewProduct() {
                         <OutlinedInput
                             id="outlined-adornment"
                             placeholder="max. Mietdauer"
-                            value={values.MAX_RENTAL_CYCLE}
-                            onChange={handleChange('MAX_RENTAL_CYCLE')}
+                            value={values.maxRentalCycle}
+                            onChange={handleChange('maxRentalCycle')}
                             endAdornment={<InputAdornment position="end">Monate</InputAdornment>}
 
                         />
@@ -133,8 +133,8 @@ export default function NewProduct() {
                     <FormControl component="fieldset" sx={{margin: "8px"}}>
                         <FormLabel component="legend">Verfügbar?</FormLabel>
                         <RadioGroup row defaultValue="true"
-                                    value={values.isAvailable}
-                                    onChange={handleChange('isAvailable')}>
+                                    value={values.available}
+                                    onChange={handleChange('available')}>
                             <FormControlLabel value="true" control={<Radio/>} label="Ja" labelPlacement="start"/>
                             <FormControlLabel value="false" control={<Radio/>} label="Nein" labelPlacement="start"/>
                         </RadioGroup>
