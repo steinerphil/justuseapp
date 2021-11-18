@@ -4,8 +4,9 @@ import styled from "styled-components/macro";
 import {useEffect, useState} from "react";
 import Button from '@mui/material/Button';
 import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
+import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import FormControl from "@mui/material/FormControl";
-import {InputLabel, MenuItem, Select} from "@mui/material";
+import {MenuItem, Select} from "@mui/material";
 
 export default function DetailsPage() {
 
@@ -29,7 +30,6 @@ export default function DetailsPage() {
         console.log(actualProductId)
         getById(actualProductId).then(data => {
             setProduct(data)
-            console.log(data)
         })
         // eslint-disable-next-line
     }, [])
@@ -38,37 +38,54 @@ export default function DetailsPage() {
         console.log("derzeit keine weiteren Optionen verfügbar")
     };
 
+    const handleLocation = product.location.substr(0, 1) + product.location.substr(1, product.location.length).toLowerCase()
+
+
     return (
         <Container>
             {renderNavigation()}
-            <Content>
-                <Wrapper>
-                    <StyledImg src={product.image.url} alt={product.title} id={product.image.id}/>
-                    <Section>
-                        <Headline>{product.title}</Headline>
-                        <p>{product.description}</p>
-                    </Section>
-                </Wrapper>
-                <Wrapper>
-                    <LikeButton variant="outlined" startIcon={<ThumbUpTwoToneIcon/>}>
+            <Wrapper>
+                <ContentOne>
+                    <FirstContentWrapper>
+                        <StyledImg src={product.image.url} alt={product.title} id={product.image.id}/>
+                        <SectionOne>
+                            <Headline>{product.title}</Headline>
+                            <p>{product.description}</p>
+                        </SectionOne>
+                    </FirstContentWrapper>
+                    <LikeButton startIcon={<ThumbUpTwoToneIcon/>}>
                         Zu Favoriten hinzufügen
                     </LikeButton>
-                    <FormControl sx={{ m: 1, minWidth: 80 }}>
-                        <InputLabel id="demo-simple-select-autowidth-label">Mietdauer</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-autowidth-label"
-                            id="demo-simple-select-autowidth"
-                            value={product.maxRentalCycle}
-                            onChange={handleChange}
-                            autoWidth
-                            label="Mietdauer"
-                        >
-                            <MenuItem value={product.maxRentalCycle}>{product.maxRentalCycle}</MenuItem>
-                        </Select>
-                    </FormControl>
+                </ContentOne>
 
-                </Wrapper>
-            </Content>
+                <ContentTwo>
+                    <Section>
+                        <p>Mietdauer:</p>
+                        <FormControl sx={{m: 1, minWidth: 80}}>
+                            <Select
+                                labelId="demo-simple-select-autowidth-label"
+                                id="demo-simple-select-autowidth"
+                                value={product.maxRentalCycle}
+                                onChange={handleChange}
+                                autoWidth
+                            >
+                                <MenuItem value={product.maxRentalCycle}>{product.maxRentalCycle}</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <p>Standort:</p>
+                        <p>{handleLocation}</p>
+                    </Section>
+                    <p>{product.price}</p>
+                </ContentTwo>
+                <Content>
+                    <ButtonLowerCase variant="outlined" startIcon={<ArrowBackTwoToneIcon/>}>
+                        Zurück zur Suche
+                    </ButtonLowerCase>
+                    <Button variant="outlined">
+                        Jetzt Mieten.
+                    </Button>
+                </Content>
+            </Wrapper>
         </Container>
     )
 }
@@ -82,7 +99,7 @@ const Wrapper = styled.div`
   font-family: 'Nunito', sans-serif;
   display: flex;
   align-self: flex-start;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   margin: 75px 2.5% 0 2.5%;
   width: 100%;
@@ -93,31 +110,69 @@ const Wrapper = styled.div`
   }
 `
 const Content = styled.div`
-display: flex;
-  flex-direction: column;
-    
-`
-
-const StyledImg = styled.img`
-  width: 50%;
-  border: 1px solid #DDDDDD;
+  display: flex;
+  flex-direction: row;
 `
 const Section = styled.div`
   display: flex;
   flex-direction: column;
 `
 
+const FirstContentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const ContentOne = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 4%;
+  background-color: #DDDDDD;
+  box-sizing: border-box;
+  border-radius: 50px;
+  padding: 5%;
+`
+const SectionOne = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  padding: 3% 0 0 4%;
+`
+
+const ContentTwo = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: #222831;
+  box-sizing: border-box;
+  border-radius: 50px;
+  padding: 5%;
+`
+
+
+const StyledImg = styled.img`
+  width: 50%;
+  border: 1px solid #DDDDDD;
+`
+
+
 const Headline = styled.p`
   font-size: 1.2rem;
   line-height: 1.5rem;
   font-weight: 400;
-  align-self: center;
+  margin-top: 0;
 `
 
+
+const ButtonLowerCase = styled(Button)`
+  && {
+    text-transform: none;
+  }
+`
 
 const LikeButton = styled(Button)`
   && {
     text-transform: none;
+    width: 50%;
   }
-
 `
