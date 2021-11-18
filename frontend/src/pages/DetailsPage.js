@@ -53,28 +53,34 @@ export default function DetailsPage() {
                             <p>{product.description}</p>
                         </SectionOne>
                     </FirstContentWrapper>
-                    <LikeButton startIcon={<ThumbUpTwoToneIcon/>}>
+                    <LikeButton startIcon={<ThumbUpTwoToneIcon/>} sx={{color: "#222831"}}>
                         Zu Favoriten hinzufügen
                     </LikeButton>
                 </ContentOne>
 
                 <ContentTwo>
-                    <Section>
-                        <p>Mietdauer:</p>
-                        <FormControl sx={{m: 1, minWidth: 80}}>
-                            <Select
-                                labelId="demo-simple-select-autowidth-label"
-                                id="demo-simple-select-autowidth"
-                                value={product.maxRentalCycle}
-                                onChange={handleChange}
-                                autoWidth
-                            >
-                                <MenuItem value={product.maxRentalCycle}>{product.maxRentalCycle}</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <p>Standort:</p>
-                        <p>{handleLocation}</p>
-                    </Section>
+                    <SectionTwo>
+                        <SecondContentWrapper>
+                            <p>Mietdauer:</p>
+                            <FormControl variant="standard" sx={{m: 1, minWidth: 80}}>
+                                <Select
+                                    sx={{color: "#222831", backgroundColor: "#DDDDDD", padding: "0 0 0 10%"}}
+                                    labelId="simple-select-autowidth-label"
+                                    id="simple-select-autowidth"
+                                    value={product.maxRentalCycle}
+                                    onChange={handleChange}
+                                    autoWidth
+                                >
+                                    <MenuItem value={product.maxRentalCycle}>{product.maxRentalCycle}</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <p>Monate</p>
+                        </SecondContentWrapper>
+                        <SecondContentWrapper>
+                            <P>Standort:</P>
+                            <p>{handleLocation}</p>
+                        </SecondContentWrapper>
+                    </SectionTwo>
                     <p>{product.price}</p>
                 </ContentTwo>
                 <Content>
@@ -126,11 +132,11 @@ const FirstContentWrapper = styled.div`
 const ContentOne = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 4%;
+  margin: 2% 0 1% 0;
   background-color: #DDDDDD;
   box-sizing: border-box;
   border-radius: 50px;
-  padding: 5%;
+  padding: 3%;
 `
 const SectionOne = styled.div`
   display: flex;
@@ -143,10 +149,27 @@ const SectionOne = styled.div`
 const ContentTwo = styled.div`
   display: flex;
   flex-direction: row;
+  margin: 1% 0 1% 0;
   background-color: #222831;
   box-sizing: border-box;
   border-radius: 50px;
-  padding: 5%;
+  padding: 3% 5%;
+  color: white;
+`
+const SecondContentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const SectionTwo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+  padding: 3% 0 0 4%;
+
+
 `
 
 
@@ -176,3 +199,5 @@ const LikeButton = styled(Button)`
     width: 50%;
   }
 `
+const P = styled.p`
+margin-right: 1em`
