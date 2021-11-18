@@ -42,7 +42,7 @@ function Header() {
                                       logout()
                                   }}>Logout</LogoutButton>
                     <IconButton aria-label="edit" sx={{color: '#F05454'}}
-                                onClick={() => history.push("/administration/new")}>
+                                onClick={() => history.push("/administration")}>
                         <SettingsTwoToneIcon/>
                     </IconButton>
                 </ButtonContainer>
@@ -55,7 +55,7 @@ function Header() {
                                       logout()
                                   }}>Logout</LogoutButton>
                     <IconButton aria-label="edit" sx={{color: '#F05454'}}
-                                onClick={() => history.push("/administration/new")}>
+                                onClick={() => history.push("/administration")}>
                         <SettingsTwoToneIcon/>
                     </IconButton>
                 </ButtonContainer>
@@ -83,6 +83,7 @@ const HeaderContainer = styled.section`
   top: 0;
   right: 0;
   left: 0;
+  z-index: 1;
 
   @media (max-width: 500px) {
     height: 47px;

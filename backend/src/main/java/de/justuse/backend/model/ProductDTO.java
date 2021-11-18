@@ -3,20 +3,18 @@ package de.justuse.backend.model;
 import de.justuse.backend.enums.Location;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
 
     private String title;
     private String description;
     private int amount;
-    private boolean isAvailable;
-    private final int MAX_RENTAL_CYCLE;
+    private boolean available;
+    private int maxRentalCycle;
     private Location location;
     private double price;
 

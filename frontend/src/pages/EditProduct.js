@@ -1,15 +1,17 @@
-import useProducts from "../hooks/useProducts";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components/macro";
+import useProducts from "../hooks/useProducts";
 import {useEffect, useState} from "react";
 import {DataGrid} from "@mui/x-data-grid";
+import {useHistory} from "react-router-dom";
 
-export default function RemoveProducts() {
+export default function EditProduct() {
 
-    const {products, removeProducts, renderNavigation} = useProducts()
+    const {products, renderNavigation} = useProducts()
     const [searchString, setSearchString] = useState("")
     const [selectionModel, setSelectionModel] = useState([]);
     const [tableData, setTableData] = useState([])
+    const history = useHistory();
 
     const columns = [
         {field: 'id', headerName: 'ID', width: 220},
@@ -31,37 +33,17 @@ export default function RemoveProducts() {
         return element.title.toLowerCase().includes(searchString.toLowerCase())
     })
 
-    const state = tableData.filter((element) => {
-        return (!selectionModel.includes(element.id))
-    })
-
-
-    function handleDelete(event) {
-        event.preventDefault();
-
-        const requestBody = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            data: {productsToRemove: []}
-        }
-
-        for (let i = 0; i < selectionModel.length; i++) {
-            const actualProduct = products.filter((element) => element.id.includes(selectionModel[i]))
-            requestBody.data.productsToRemove.push({productId: actualProduct[0].id, imageId: actualProduct[0].image.id})
-        }
-
-        setTableData(state)
-
-        removeProducts(requestBody)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        selectionModel.length!==0 ? history.push(`/administration/edit/2?id=${selectionModel[0]}`) : alert("Bitte wähle ein Produkt aus.")
     }
 
     return (
         <Content>
             {renderNavigation()}
             <Wrapper>
-                <Headline>Produkt löschen</Headline>
-                <Form onSubmit={handleDelete}>
+                <Headline>Produkt bearbeiten</Headline>
+                <Form onSubmit={handleSubmit}>
                     <TextField
                         label="Produktname"
                         id="outlined-multiline-static"
@@ -84,13 +66,11 @@ export default function RemoveProducts() {
                             selectionModel={selectionModel}
                         />
                     </div>
-                    <button type="submit">delete selected product(s)</button>
+                    <button type="submit">edit selected product</button>
                 </Form>
             </Wrapper>
         </Content>
-
     )
-
 }
 
 const Headline = styled.p`

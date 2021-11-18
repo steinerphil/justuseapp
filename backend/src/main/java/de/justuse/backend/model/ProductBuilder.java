@@ -1,9 +1,6 @@
 package de.justuse.backend.model;
 
 import de.justuse.backend.enums.Location;
-import lombok.Builder;
-
-import java.util.List;
 
 public class ProductBuilder {
 
@@ -11,17 +8,15 @@ public class ProductBuilder {
     private String title;
     private String description;
     private int amount;
-    private boolean isAvailable = false;
-    private final int MAX_RENTAL_CYCLE;
+    private boolean available = false;
+    private int maxRentalCycle;
     private Location location;
     private double price;
-//    private List<Image> images;
     private Image image;
 
 
-    public ProductBuilder(String id, int MAX_RENTAL_CYCLE) {
+    public ProductBuilder(String id) {
         this.id = id;
-        this.MAX_RENTAL_CYCLE = MAX_RENTAL_CYCLE;
     }
 
     public ProductBuilder setTitle(String title) {
@@ -39,8 +34,8 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder setIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public ProductBuilder setAvailable(boolean available) {
+        this.available = available;
         return this;
     }
 
@@ -54,10 +49,10 @@ public class ProductBuilder {
         return this;
     }
 
-//    public ProductBuilder setImages(List<Image> images) {
-//        this.images = images;
-//        return this;
-//    }
+    public ProductBuilder setMaxRentalCycle(int maxRentalCycle){
+        this.maxRentalCycle = maxRentalCycle;
+        return this;
+    }
 
     public ProductBuilder setImage(Image image) {
         this.image = image;
@@ -65,6 +60,6 @@ public class ProductBuilder {
     }
 
     public Product build() {
-        return new Product(id, title, description, amount, isAvailable, MAX_RENTAL_CYCLE, location, price, image);
+        return new Product(id, title, description, amount, available, maxRentalCycle, location, price, image);
     }
 }

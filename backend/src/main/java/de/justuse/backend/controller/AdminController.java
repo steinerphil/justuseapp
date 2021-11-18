@@ -26,19 +26,31 @@ public class AdminController {
 
     @PostMapping("/product/new")
     public Product addProduct(@RequestPart ProductDTO productDTO, @RequestPart(value = "file") Optional<MultipartFile> uploadFile) throws IOException {
-       Optional<Image> optionalImage = Optional.empty();
+        Optional<Image> optionalImage = Optional.empty();
         if (uploadFile.isPresent()) {
             File fileToUpload = File.createTempFile("photo", null);
             uploadFile.get().transferTo(fileToUpload);
             Image image = cloudinaryService.uploadImage(fileToUpload);
             optionalImage = Optional.of(image);
         }
-        return productService.addProduct(productDTO, optionalImage );
+        return productService.addProduct(productDTO, optionalImage);
     }
 
     @DeleteMapping("product/delete")
     public void deleteProducts(@RequestBody DeleteProductDTO requestBody) throws IOException {
-     DeleteProductApiDTO[] productsToRemove = requestBody.getData();
+        DeleteProductApiDTO[] productsToRemove = requestBody.getData();
         productService.deleteProducts(productsToRemove);
+    }
+
+    @PostMapping("/product/edit/{id}")
+    public Product editProduct(@PathVariable String id, @RequestPart Product product, @RequestPart(value = "file") Optional<MultipartFile> uploadFile) throws IOException {
+        Optional<Image> optionalImage = Optional.empty();
+        if (uploadFile.isPresent()) {
+            File fileToUpload = File.createTempFile("photo", null);
+            uploadFile.get().transferTo(fileToUpload);
+            Image image = cloudinaryService.uploadImage(fileToUpload);
+            optionalImage = Optional.of(image);
+        }
+        return productService.editProduct(id, product, optionalImage);
     }
 }
