@@ -100,6 +100,7 @@ public class ProductService {
                     .setLocation(product.getLocation())
                     .setImage(optionalImage.orElse(product.getImage()))
                     .setAvailable(product.isAvailable())
+                    .setMaxRentalCycle(product.getMaxRentalCycle())
                     .build();
 
             return productRepo.save(editedProduct);
