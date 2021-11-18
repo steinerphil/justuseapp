@@ -19,7 +19,6 @@ public class ProductService {
     private final CloudinaryService cloudinaryService;
 
 
-
     @Autowired
     public ProductService(ProductDAO productRepo, ImageDAO imageDAO, CloudinaryService cloudinaryService, CloudinaryService cloudinaryService1) {
         this.productRepo = productRepo;
@@ -48,31 +47,24 @@ public class ProductService {
     }
 
 
-
-
     public List<Product> getProducts() {
         return productRepo.findAll();
     }
-
 
 
     private void checkApiObject(ProductDTO productDTO) throws InvalidObjectException {
         if (productDTO.getMAX_RENTAL_CYCLE() == 0) {
             throw new InvalidObjectException("Trying to add new product with MAX_RENTAL_CYCLE = 0. MAX_RENTAL_CYCLE can't be 0");
         }
-
         if (productDTO.getTitle() == null) {
             throw new InvalidObjectException("product is not valid, please check title");
         }
-
         if (productDTO.getDescription() == null) {
             throw new InvalidObjectException("product is not valid, please check description");
         }
-
         if (productDTO.getPrice() == 0) {
             throw new InvalidObjectException("product is not valid, please check price");
         }
-
         if (productDTO.getLocation() == null) {
             throw new InvalidObjectException("product is not valid, please check location");
         }
@@ -81,7 +73,7 @@ public class ProductService {
 
 
     public void deleteProducts(DeleteProductApiDTO[] products) throws IOException {
-        for (DeleteProductApiDTO product: products) {
+        for (DeleteProductApiDTO product : products) {
             String productId = product.getProductId();
             String imageId = product.getImageId();
 
@@ -91,9 +83,30 @@ public class ProductService {
     }
 
     public Product getById(String id) {
-        if (productRepo.findById(id).isEmpty()){
+        if (productRepo.findById(id).isEmpty()) {
             throw new NoSuchElementException("Product not found. Id: " + id);
         }
         return productRepo.findById(id).get();
     }
+
+    public Product editProduct(String id, Product product, Optional<Image> optionalImage) {
+
+        if (productRepo.existsById(id)) {
+            Product editedProduct = new ProductBuilder(id, product.getMAX_RENTAL_CYCLE())
+                    .setTitle(product.getTitle())
+                    .setDescription(product.getDescription())
+                    .setAmount(product.getAmount())
+                    .setPrice(product.getPrice())
+                    .setLocation(product.getLocation())
+                    .setImage(optionalImage.orElse(product.getImage()))
+                    .setIsAvailable(product.isAvailable())
+                    .build();
+
+            return productRepo.save(product);
+        } else {
+            throw new NoSuchElementException("Product not found. Id: " + id);
+        }
+    }
+
+
 }

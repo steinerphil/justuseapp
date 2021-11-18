@@ -24,4 +24,8 @@ export function getProductById(id){
     return axios.get(`/api/products/${id}`, getHeader())
 }
 
+export function editProduct(formData, id, headerConfig){
+    return axios.post(`/administration/product/edit/${id}`, formData, headerConfig)
+}
+
 

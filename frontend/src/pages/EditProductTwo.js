@@ -19,13 +19,17 @@ export default function EditProductTwo() {
     const [newProductData, setNewProductData] = useState({
         title: '',
         description: '',
-        amount: '',
+        amount: 0,
         location: '',
         price: '',
         available: null,
         max_RENTAL_CYCLE: '',
+        image: {
+            id: '',
+            url: '',
+        }
     })
-    const {getById, renderNavigation} = useProducts()
+    const {getById, renderNavigation, editProductService} = useProducts()
     const queryString = new URLSearchParams(useLocation().search);
     const currentId = queryString.get("id")
     const inputRef = useRef()
@@ -40,15 +44,30 @@ export default function EditProductTwo() {
     }, [])
 
     const handleChange = (prop) => (event) => {
+        // const parsedValue = () =>{
+        //     const value = parseInt(event.target.value);
+        //     return isNaN(value)? event.target.value : value;
+        // }
         setNewProductData({...newProductData, [prop]: event.target.value});
     };
 
     function submitProduct(event) {
         event.preventDefault()
-        if (productData === newProductData) {
+        if (JSON.stringify(productData) === JSON.stringify(newProductData)) {
             alert("Es wurden keine Änderungen vorgenommen.")
         } else {
-            console.log(newProductData)
+            const headerConfig = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+
+            const formData = new FormData;
+            formData.append("product", new Blob([JSON.stringify(newProductData)], {type: "application/json"}));
+            formData.append("file", inputRef.current.files[0]);
+
+            editProductService(formData, currentId, headerConfig)
         }
     }
 
@@ -84,6 +103,11 @@ export default function EditProductTwo() {
                             id="outlined-adornment"
                             placeholder="Anzahl"
                             value={newProductData.amount}
+                            onKeyPress={(event) => {
+                                if (!/[0-9]/.test(event.key)) {
+                                    event.preventDefault();
+                                }
+                            }}
                             onChange={handleChange('amount')}
                             endAdornment={<InputAdornment position="end">Stück</InputAdornment>}
                         />
@@ -138,6 +162,8 @@ export default function EditProductTwo() {
                     </FormControl>
 
                     <StyledInput type="file" ref={inputRef}/>
+                    <p>Aktuelles Bild:</p>
+                    <StyledImg src={newProductData.image.url} alt={newProductData.title} id={newProductData.image.id}/>
                     <Button type="submit" variant="contained" endIcon={<SendIcon/>}>
                         Speichern
                     </Button>
@@ -180,4 +206,8 @@ const Headline = styled.p`
   font-size: 1.2rem;
   line-height: 1.5rem;
   font-weight: 400;
+`
+const StyledImg = styled.img`
+width: 200px;
+height: 200px;
 `
