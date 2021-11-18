@@ -81,16 +81,17 @@ export default function DetailsPage() {
                             <p>{handleLocation}</p>
                         </SecondContentWrapper>
                     </SectionTwo>
-                    <p>{product.price}</p>
+
+                    <PriceTag>{product.price}€</PriceTag>
                 </ContentTwo>
-                <Content>
-                    <ButtonLowerCase variant="outlined" startIcon={<ArrowBackTwoToneIcon/>}>
+                <ContentThree>
+                    <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>}>
                         Zurück zur Suche
-                    </ButtonLowerCase>
-                    <Button variant="outlined">
+                    </BackButton>
+                    <CheckoutButton variant="contained">
                         Jetzt Mieten.
-                    </Button>
-                </Content>
+                    </CheckoutButton>
+                </ContentThree>
             </Wrapper>
         </Container>
     )
@@ -114,14 +115,10 @@ const Wrapper = styled.div`
     margin-top: 47px;
     margin-bottom: 65px;
   }
-`
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
+  
+  @media(min-width: 820px){
+    max-width: 820px;
+  }
 `
 
 const FirstContentWrapper = styled.div`
@@ -132,11 +129,11 @@ const FirstContentWrapper = styled.div`
 const ContentOne = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 2% 0 1% 0;
-  background-color: #DDDDDD;
-  box-sizing: border-box;
-  border-radius: 50px;
-  padding: 3%;
+  margin: 5.5% 0 1% 0;
+  //background-color: #DDDDDD;
+  //box-sizing: border-box;
+  //border-radius: 50px;
+  //padding: 3%;
 `
 const SectionOne = styled.div`
   display: flex;
@@ -150,11 +147,11 @@ const ContentTwo = styled.div`
   display: flex;
   flex-direction: row;
   margin: 1% 0 1% 0;
-  background-color: #222831;
-  box-sizing: border-box;
-  border-radius: 50px;
-  padding: 3% 5%;
-  color: white;
+  //background-color: #222831;
+  //box-sizing: border-box;
+  //border-radius: 50px;
+  //padding: 3% 5%;
+  //color: white;
 `
 const SecondContentWrapper = styled.div`
   display: flex;
@@ -168,8 +165,13 @@ const SectionTwo = styled.div`
   width: 50%;
   align-items: flex-start;
   padding: 3% 0 0 4%;
+`
 
-
+const ContentThree = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  justify-content: center;
 `
 
 
@@ -186,13 +188,6 @@ const Headline = styled.p`
   margin-top: 0;
 `
 
-
-const ButtonLowerCase = styled(Button)`
-  && {
-    text-transform: none;
-  }
-`
-
 const LikeButton = styled(Button)`
   && {
     text-transform: none;
@@ -201,3 +196,37 @@ const LikeButton = styled(Button)`
 `
 const P = styled.p`
 margin-right: 1em`
+
+const PriceTag = styled.p`
+height: fit-content;
+  font-weight: 300;
+  font-size: 2.5em;
+  `
+
+const CheckoutButton = styled(Button)`
+  && {
+    color: white;
+    background-color: #F05454;
+    border-color: #F05454;
+    margin-left: 3%;
+
+    :hover {
+      border-color: #F57575FF;
+      background-color: #F57575FF;
+    }
+  }
+`
+
+const BackButton = styled(Button)`
+  && {
+    text-transform: none;
+    color: #878787;
+    border-color: #878787;
+    margin-left: 3%;
+
+    :hover {
+      border-color: #9E9D9DFF;
+      color: #9E9D9DFF;
+    }
+  }
+`

@@ -121,7 +121,6 @@ const LoginButton = styled(Button)`
       display: none;
     }
   }
-
 `
 
 const WhiteButton = styled(Button)`
