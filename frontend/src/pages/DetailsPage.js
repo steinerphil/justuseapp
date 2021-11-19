@@ -1,5 +1,5 @@
 import useProducts from "../hooks/useProducts";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import styled from "styled-components/macro";
 import {useEffect, useState} from "react";
 import Button from '@mui/material/Button';
@@ -10,6 +10,7 @@ import {MenuItem, Select} from "@mui/material";
 
 export default function DetailsPage() {
 
+    const history = useHistory()
     const {renderNavigation, getById} = useProducts();
     const {actualProductId} = useParams();
     const [product, setProduct] = useState({
@@ -85,14 +86,15 @@ export default function DetailsPage() {
                     <PriceTag>{product.price}€</PriceTag>
                 </ContentTwo>
                 <ContentThree>
-                    <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>}>
-                        Zurück zur Suche
+                    <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>} onClick={()=> history.goBack()}>
+                        zur Suche
                     </BackButton>
                     <CheckoutButton variant="contained">
                         Jetzt Mieten.
                     </CheckoutButton>
                 </ContentThree>
             </Wrapper>
+
         </Container>
     )
 }

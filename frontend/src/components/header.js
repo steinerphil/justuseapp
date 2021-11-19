@@ -116,12 +116,11 @@ const LoginButton = styled(Button)`
       border-color: #F57575FF;
       color: #F57575FF;
     }
-
-    @media (min-width: 573px) {
-      display: none;
-    }
     @media (max-width: 500px) {
       border: 0;
+      :hover {
+        border:0;
+      }
     }
   }
 `
@@ -144,6 +143,9 @@ const WhiteButton = styled(Button)`
     }
     @media (max-width: 500px) {
       border: 0;
+      :hover {
+        border:0;
+      }
     }
   }
 `
@@ -162,6 +164,9 @@ const LogoutButton = styled(Button)`
 
     @media (max-width: 500px) {
       border: 0;
+      :hover {
+        border:0;
+      }
     }
   }
 `
