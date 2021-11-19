@@ -47,7 +47,7 @@ export default function DetailsPage() {
             <Wrapper>
                 <ContentOne>
                     <FirstContentWrapper>
-                        <StyledImg src={product.image.url} alt={product.title} id={product.image.id}/>
+                        <StyledImg src={product.image.url} alt={product.title} id={product.image.id} tabIndex="0"/>
                         <SectionOne>
                             <Headline>{product.title}</Headline>
                             <PDescription>{product.description}</PDescription>
@@ -187,6 +187,10 @@ const ContentThree = styled.div`
 const StyledImg = styled.img`
   width: 50%;
   border: 1px solid #DDDDDD;
+  
+  :focus{
+    width: 100%;
+  }
   
   @media(max-width: 500px){
 align-self: center;
