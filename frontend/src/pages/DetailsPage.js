@@ -50,7 +50,7 @@ export default function DetailsPage() {
                         <StyledImg src={product.image.url} alt={product.title} id={product.image.id}/>
                         <SectionOne>
                             <Headline>{product.title}</Headline>
-                            <p>{product.description}</p>
+                            <PDescription>{product.description}</PDescription>
                         </SectionOne>
                     </FirstContentWrapper>
                     <LikeButton startIcon={<ThumbUpTwoToneIcon/>} sx={{color: "#222831"}}>
@@ -121,10 +121,7 @@ const Wrapper = styled.div`
   }
 `
 
-const FirstContentWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`
+
 
 const ContentOne = styled.div`
   display: flex;
@@ -135,12 +132,24 @@ const ContentOne = styled.div`
   //border-radius: 50px;
   //padding: 3%;
 `
+const FirstContentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  
+  @media(max-width: 500px){
+    flex-direction: column;
+  }
+`
 const SectionOne = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: flex-start;
   padding: 3% 0 0 4%;
+
+  @media(max-width: 500px){
+padding: 5% 0 0 7%
+  }
 `
 
 const ContentTwo = styled.div`
@@ -178,6 +187,11 @@ const ContentThree = styled.div`
 const StyledImg = styled.img`
   width: 50%;
   border: 1px solid #DDDDDD;
+  
+  @media(max-width: 500px){
+align-self: center;
+    width: 75%;
+  }
 `
 
 
@@ -192,6 +206,10 @@ const LikeButton = styled(Button)`
   && {
     text-transform: none;
     width: 50%;
+
+    @media(max-width: 500px){
+align-self: flex-end;
+    }
   }
 `
 const P = styled.p`
@@ -201,6 +219,9 @@ const PriceTag = styled.p`
 height: fit-content;
   font-weight: 300;
   font-size: 2.5em;
+  @media(max-width: 500px){
+margin-left: 15%;
+  }
   `
 
 const CheckoutButton = styled(Button)`
@@ -228,5 +249,11 @@ const BackButton = styled(Button)`
       border-color: #9E9D9DFF;
       color: #9E9D9DFF;
     }
+  }
+`
+
+const PDescription = styled.p`
+  @media(max-width: 500px){
+margin: 0.25em 0;
   }
 `
