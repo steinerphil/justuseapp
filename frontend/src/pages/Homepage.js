@@ -149,10 +149,12 @@ const LoginButton = styled(Button)`
     text-transform: none;
     color: #F05454;
     border-color: #F05454;
-    margin-left: 3%;
+    margin-left: 6%;
     order: 2;
     font-size: 1.15rem;
     font-weight: 400;
+    box-shadow: 0 4px 32px rgba(252, 56, 56, 0.4);
+    
 
     :hover {
       border-color: #F57575FF;
