@@ -38,7 +38,6 @@ export default function EditProductTwo() {
         getById(currentId).then(data => {
             setProductData(data);
             setNewProductData(data)
-            console.log(data)
         })
         // eslint-disable-next-line
     }, [])
@@ -164,8 +163,6 @@ export default function EditProductTwo() {
                         Speichern
                     </Button>
                 </Form>
-                <button onClick={() => console.log(inputRef)}>test</button>
-
             </Wrapper>
         </Box>
     )
