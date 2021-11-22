@@ -43,18 +43,13 @@ export default function EditProductTwo() {
         // eslint-disable-next-line
     }, [])
 
-    //TODO wenn nur das bild geändert wird kann es nicht gespeichert werden
     const handleChange = (prop) => (event) => {
-        // const parsedValue = () =>{
-        //     const value = parseInt(event.target.value);
-        //     return isNaN(value)? event.target.value : value;
-        // }
         setNewProductData({...newProductData, [prop]: event.target.value});
     };
 
     function submitProduct(event) {
         event.preventDefault()
-        if (JSON.stringify(productData) === JSON.stringify(newProductData)) {
+        if (JSON.stringify(productData) === JSON.stringify(newProductData) && inputRef.current.files.length <1) {
             alert("Es wurden keine Änderungen vorgenommen.")
         } else {
             const headerConfig = {
@@ -169,6 +164,8 @@ export default function EditProductTwo() {
                         Speichern
                     </Button>
                 </Form>
+                <button onClick={() => console.log(inputRef)}>test</button>
+
             </Wrapper>
         </Box>
     )
