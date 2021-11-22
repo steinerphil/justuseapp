@@ -12,6 +12,7 @@ import NewProduct from "./pages/NewProduct";
 import EditProduct from "./pages/EditProduct";
 import EditProductTwo from "./pages/EditProductTwo";
 import DetailsPage from "./pages/DetailsPage";
+import Checkout from "./pages/Checkout";
 
 function App() {
 
@@ -50,6 +51,9 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute exact path="/products/details/:actualProductId">
                     <DetailsPage/>
+                </PrivateRoute>
+                <PrivateRoute exact path="/products/checkout/:actualProductId">
+                    <Checkout/>
                 </PrivateRoute>
             </Switch>
         </div>

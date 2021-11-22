@@ -28,7 +28,6 @@ export default function DetailsPage() {
     })
 
     useEffect(() => {
-        console.log(actualProductId)
         getById(actualProductId).then(data => {
             setProduct(data)
         })
@@ -84,14 +83,15 @@ export default function DetailsPage() {
                     </SectionTwo>
 
                     <PriceTag>{product.price}€</PriceTag>
+                    <CheckoutButton variant="contained">
+                        Jetzt Mieten.
+                    </CheckoutButton>
                 </ContentTwo>
                 <ContentThree>
                     <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>} onClick={()=> history.goBack()}>
                         zur Suche
                     </BackButton>
-                    <CheckoutButton variant="contained">
-                        Jetzt Mieten.
-                    </CheckoutButton>
+
                 </ContentThree>
             </Wrapper>
 
