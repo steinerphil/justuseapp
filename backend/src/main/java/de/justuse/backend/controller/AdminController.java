@@ -26,14 +26,8 @@ public class AdminController {
 
     @PostMapping("/product/new")
     public Product addProduct(@RequestPart ProductDTO productDTO, @RequestPart(value = "file") Optional<MultipartFile> uploadFile) throws IOException {
-        Optional<Image> optionalImage = Optional.empty();
-        if (uploadFile.isPresent()) {
-            File fileToUpload = File.createTempFile("photo", null);
-            uploadFile.get().transferTo(fileToUpload);
-            Image image = cloudinaryService.uploadImage(fileToUpload);
-            optionalImage = Optional.of(image);
-        }
-        return productService.addProduct(productDTO, optionalImage);
+
+        return productService.addProduct(productDTO, convertToImage(uploadFile));
     }
 
     @DeleteMapping("product/delete")
@@ -44,6 +38,11 @@ public class AdminController {
 
     @PostMapping("/product/edit/{id}")
     public Product editProduct(@PathVariable String id, @RequestPart Product product, @RequestPart(value = "file") Optional<MultipartFile> uploadFile) throws IOException {
+
+        return productService.editProduct(id, product, convertToImage(uploadFile));
+    }
+
+    private Optional<Image> convertToImage(Optional<MultipartFile> uploadFile) throws IOException {
         Optional<Image> optionalImage = Optional.empty();
         if (uploadFile.isPresent()) {
             File fileToUpload = File.createTempFile("photo", null);
@@ -51,6 +50,6 @@ public class AdminController {
             Image image = cloudinaryService.uploadImage(fileToUpload);
             optionalImage = Optional.of(image);
         }
-        return productService.editProduct(id, product, optionalImage);
+        return optionalImage;
     }
 }

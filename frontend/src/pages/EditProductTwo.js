@@ -38,22 +38,17 @@ export default function EditProductTwo() {
         getById(currentId).then(data => {
             setProductData(data);
             setNewProductData(data)
-            console.log(data)
         })
         // eslint-disable-next-line
     }, [])
 
     const handleChange = (prop) => (event) => {
-        // const parsedValue = () =>{
-        //     const value = parseInt(event.target.value);
-        //     return isNaN(value)? event.target.value : value;
-        // }
         setNewProductData({...newProductData, [prop]: event.target.value});
     };
 
     function submitProduct(event) {
         event.preventDefault()
-        if (JSON.stringify(productData) === JSON.stringify(newProductData)) {
+        if (JSON.stringify(productData) === JSON.stringify(newProductData) && inputRef.current.files.length <1) {
             alert("Es wurden keine Änderungen vorgenommen.")
         } else {
             const headerConfig = {
