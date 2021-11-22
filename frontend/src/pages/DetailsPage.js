@@ -12,6 +12,7 @@ export default function DetailsPage() {
 
     const history = useHistory()
     const {renderNavigation, getById} = useProducts();
+
     const {actualProductId} = useParams();
     const [product, setProduct] = useState({
         title: '',
@@ -27,19 +28,19 @@ export default function DetailsPage() {
         }
     })
 
+    const handleLocation = product.location.substr(0, 1) + product.location.substr(1, product.location.length).toLowerCase()
+
     useEffect(() => {
         getById(actualProductId).then(data => {
             setProduct(data)
-        })
+        });
         // eslint-disable-next-line
     }, [])
 
-    const handleChange = () => {
-        console.log("derzeit keine weiteren Optionen verfügbar")
-    };
 
-    const handleLocation = product.location.substr(0, 1) + product.location.substr(1, product.location.length).toLowerCase()
-
+    function handleCheckout() {
+        history.push(`/products/checkout/${actualProductId}`)
+    }
 
     return (
         <Container>
@@ -68,7 +69,6 @@ export default function DetailsPage() {
                                     labelId="simple-select-autowidth-label"
                                     id="simple-select-autowidth"
                                     value={product.maxRentalCycle}
-                                    onChange={handleChange}
                                     autoWidth
                                 >
                                     <MenuItem value={product.maxRentalCycle}>{product.maxRentalCycle}</MenuItem>
@@ -83,12 +83,12 @@ export default function DetailsPage() {
                     </SectionTwo>
 
                     <PriceTag>{product.price}€</PriceTag>
-                    <CheckoutButton variant="contained">
+                    <CheckoutButton variant="contained" onClick={handleCheckout}>
                         Jetzt Mieten.
                     </CheckoutButton>
                 </ContentTwo>
                 <ContentThree>
-                    <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>} onClick={()=> history.goBack()}>
+                    <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>} onClick={() => history.goBack()}>
                         zur Suche
                     </BackButton>
 
@@ -117,12 +117,11 @@ const Wrapper = styled.div`
     margin-top: 47px;
     margin-bottom: 65px;
   }
-  
-  @media(min-width: 820px){
+
+  @media (min-width: 820px) {
     max-width: 820px;
   }
 `
-
 
 
 const ContentOne = styled.div`
@@ -137,8 +136,8 @@ const ContentOne = styled.div`
 const FirstContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  
-  @media(max-width: 500px){
+
+  @media (max-width: 500px) {
     flex-direction: column;
   }
 `
@@ -149,8 +148,8 @@ const SectionOne = styled.div`
   align-items: flex-start;
   padding: 3% 0 0 4%;
 
-  @media(max-width: 500px){
-padding: 5% 0 0 7%
+  @media (max-width: 500px) {
+    padding: 5% 0 0 7%
   }
 `
 
@@ -189,13 +188,13 @@ const ContentThree = styled.div`
 const StyledImg = styled.img`
   width: 50%;
   border: 1px solid #DDDDDD;
-  
-  :focus{
+
+  :focus {
     width: 100%;
   }
-  
-  @media(max-width: 500px){
-align-self: center;
+
+  @media (max-width: 500px) {
+    align-self: center;
     width: 75%;
   }
 `
@@ -213,29 +212,30 @@ const LikeButton = styled(Button)`
     text-transform: none;
     width: 50%;
 
-    @media(max-width: 500px){
-align-self: flex-end;
+    @media (max-width: 500px) {
+      align-self: flex-end;
     }
   }
 `
 const P = styled.p`
-margin-right: 1em`
+  margin-right: 1em`
 
 const PriceTag = styled.p`
-height: fit-content;
+  height: fit-content;
   font-weight: 300;
   font-size: 2.5em;
-  @media(max-width: 500px){
-margin-left: 15%;
+  @media (max-width: 500px) {
+    margin-left: 15%;
   }
-  `
+`
 
 const CheckoutButton = styled(Button)`
   && {
     color: white;
     background-color: #F05454;
     border-color: #F05454;
-    margin-left: 3%;
+    margin: auto;
+    height: 50px;
 
     :hover {
       border-color: #F57575FF;
@@ -259,7 +259,7 @@ const BackButton = styled(Button)`
 `
 
 const PDescription = styled.p`
-  @media(max-width: 500px){
-margin: 0.25em 0;
+  @media (max-width: 500px) {
+    margin: 0.25em 0;
   }
 `

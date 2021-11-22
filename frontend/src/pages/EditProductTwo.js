@@ -43,6 +43,7 @@ export default function EditProductTwo() {
         // eslint-disable-next-line
     }, [])
 
+    //TODO wenn nur das bild geändert wird kann es nicht gespeichert werden
     const handleChange = (prop) => (event) => {
         // const parsedValue = () =>{
         //     const value = parseInt(event.target.value);
