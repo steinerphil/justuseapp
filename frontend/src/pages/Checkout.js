@@ -109,7 +109,6 @@ export default function Checkout() {
                     <CheckoutButton variant="contained" type="submit">
                         Jetzt Mieten.
                     </CheckoutButton>
-                    <button onClick={() => console.log(date)}>test</button>
                 </form>
             </Wrapper>
         </Container>
