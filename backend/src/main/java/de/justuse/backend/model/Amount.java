@@ -10,15 +10,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class OrderDTO {
+public class Amount {
 
+    @JsonProperty("currency_code")
+    private String currencyCode;
 
-    private String intent;
-
-    @JsonProperty("reference_id")
-    private String referenceId;
-
-    @JsonProperty("purchase_units")
-    private PurchaseUnits[] purchaseUnits;
+    private String value;
 }
-

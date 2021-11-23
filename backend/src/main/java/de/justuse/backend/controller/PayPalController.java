@@ -1,69 +1,81 @@
 package de.justuse.backend.controller;
 
-import com.paypal.api.payments.Links;
-import com.paypal.api.payments.Payment;
-import com.paypal.base.rest.PayPalRESTException;
 import de.justuse.backend.model.OrderDTO;
-import de.justuse.backend.service.PayPalService;
+import de.justuse.backend.model.PayPalResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import com.paypal.http.HttpResponse;
+import com.paypal.orders.*;
+import de.justuse.backend.config.PayPalClient;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/checkout")
+@RequestMapping("/api/checkout")
 public class PayPalController {
 
-    private final PayPalService payPalService;
+
+    private final PayPalClient payPalClient;
 
     @Autowired
-    public PayPalController(PayPalService payPalService) {
-        this.payPalService = payPalService;
+    public PayPalController(PayPalClient payPalClient) {
+        this.payPalClient = payPalClient;
     }
 
-    public static final String SUCCESS_URL = "/pay/success";
-    public static final String CANCEL_URL = "/pay/cancel";
 
-    @GetMapping("/")
-    public String home() {
-        return "home";
-    }
+    @PostMapping(value = "/order",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PayPalResponseDTO createOrder(@RequestBody OrderDTO paypalRequest) throws IOException {
 
-    @PostMapping("/pay")
-    public String payment(@RequestBody OrderDTO order) {
-        try {
-            Payment payment = payPalService.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "http://localhost:9090/" + CANCEL_URL,
-                    "http://localhost:9090/" + SUCCESS_URL);
-            for(Links link:payment.getLinks()) {
-                if(link.getRel().equals("approval_url")) {
-                    return "redirect:"+link.getHref();
-                }
-            }
-
-        } catch (PayPalRESTException e) {
-
-            e.printStackTrace();
+        OrdersCreateRequest request = new OrdersCreateRequest();
+        request.prefer("return=representation");
+        request.requestBody(buildRequestBody(paypalRequest));
+        //3. Call PayPal to set up a transaction
+        HttpResponse<Order> response = payPalClient.client().execute(request);
+        PayPalResponseDTO paypalResponse = new PayPalResponseDTO();
+        if (response.statusCode() == 201) {
+            paypalResponse.setId(response.result().id());
         }
-        return "redirect:/";
+
+        return paypalResponse;
     }
 
-    @GetMapping(value = CANCEL_URL)
-    public String cancelPay() {
-        return "cancel";
-    }
+//    @PostMapping("/api/v1/approve")
+//    public PaypalResponse approveOrder(@RequestBody PaypalRequest paypalRequest) throws IOException {
+//        PaypalResponse res = new PaypalResponse();
+//        OrdersGetRequest request = new OrdersGetRequest(paypalRequest.getOrderId());
+//
+//        //3. Call PayPal to get the transaction
+//        HttpResponse<Order> response = paypalClient.client().execute(request);
+//        //4. Save the transaction in your database. Implement logic to save transaction to your database for future reference.
+//        if(response.statusCode() == HttpStatus.SC_OK){
+//            response = paypalService.captureOrder(paypalRequest, true);
+//            if(response.statusCode() == HttpStatus.SC_CREATED) {
+//                //System.out.println(new JSONObject(new Json().serialize(response.result())).toString(4));
+//                res.setOrderID(response.result().id());
+//            }
+//            return res;
+//        }else {
+//            return res;
+//        }
+//    }
 
-    @GetMapping(value = SUCCESS_URL)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
-        try {
-            Payment payment = payPalService.executePayment(paymentId, payerId);
-            System.out.println(payment.toJSON());
-            if (payment.getState().equals("approved")) {
-                return "success";
-            }
-        } catch (PayPalRESTException e) {
-            System.out.println(e.getMessage());
-        }
-        return "redirect:/";
+    private OrderRequest buildRequestBody(OrderDTO payPalRequest ) {
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.checkoutPaymentIntent("CAPTURE");
+
+        ApplicationContext applicationContext = new ApplicationContext().brandName("justuseapp").landingPage("LOGIN");
+        orderRequest.applicationContext(applicationContext);
+
+        List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
+        PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest().referenceId(payPalRequest.getReferenceId())
+                .description(payPalRequest.getPurchaseUnits()[0].getDescription())
+                .amountWithBreakdown(new AmountWithBreakdown().currencyCode("EUR").value(payPalRequest.getPurchaseUnits()[0].getAmount().getValue()));
+        purchaseUnitRequests.add(purchaseUnitRequest);
+        orderRequest.purchaseUnits(purchaseUnitRequests);
+        return orderRequest;
     }
 
 }
