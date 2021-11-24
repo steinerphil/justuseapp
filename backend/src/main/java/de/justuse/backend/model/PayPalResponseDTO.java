@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,6 +13,7 @@ public class PayPalResponseDTO {
 
     private String id;
     private String status;
+    private List<Links> links;
 
     //TODO Links Array in Response DTO hinzufügen
     //TODO Authorization Header in Post Request

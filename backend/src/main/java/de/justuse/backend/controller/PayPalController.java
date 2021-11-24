@@ -2,6 +2,7 @@ package de.justuse.backend.controller;
 
 import de.justuse.backend.model.OrderDTO;
 import de.justuse.backend.model.PayPalResponseDTO;
+import de.justuse.backend.service.PayPalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,29 +19,19 @@ import java.util.List;
 public class PayPalController {
 
 
-    private final PayPalClient payPalClient;
+    private final PayPalService payPalService;
 
     @Autowired
-    public PayPalController(PayPalClient payPalClient) {
-        this.payPalClient = payPalClient;
+    public PayPalController(PayPalService payPalService) {
+        this.payPalService = payPalService;
     }
 
+    @PostMapping("/order")
+    public Order createOrder(@RequestBody OrderDTO paypalRequest) throws IOException {
 
-    @PostMapping(value = "/order",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public PayPalResponseDTO createOrder(@RequestBody OrderDTO paypalRequest) throws IOException {
-
-        OrdersCreateRequest request = new OrdersCreateRequest();
-        request.prefer("return=representation");
-        request.requestBody(buildRequestBody(paypalRequest));
-        //3. Call PayPal to set up a transaction
-        HttpResponse<Order> response = payPalClient.client().execute(request);
-        PayPalResponseDTO paypalResponse = new PayPalResponseDTO();
-        if (response.statusCode() == 201) {
-            paypalResponse.setId(response.result().id());
-        }
-
-        return paypalResponse;
+       return payPalService.createOrder(true, paypalRequest).result();
     }
+
 
 //    @PostMapping("/api/v1/approve")
 //    public PaypalResponse approveOrder(@RequestBody PaypalRequest paypalRequest) throws IOException {
@@ -62,20 +53,5 @@ public class PayPalController {
 //        }
 //    }
 
-    private OrderRequest buildRequestBody(OrderDTO payPalRequest ) {
-        OrderRequest orderRequest = new OrderRequest();
-        orderRequest.checkoutPaymentIntent("CAPTURE");
-
-        ApplicationContext applicationContext = new ApplicationContext().brandName("justuseapp").landingPage("LOGIN");
-        orderRequest.applicationContext(applicationContext);
-
-        List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
-        PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest().referenceId(payPalRequest.getReferenceId())
-                .description(payPalRequest.getPurchaseUnits()[0].getDescription())
-                .amountWithBreakdown(new AmountWithBreakdown().currencyCode("EUR").value(payPalRequest.getPurchaseUnits()[0].getAmount().getValue()));
-        purchaseUnitRequests.add(purchaseUnitRequest);
-        orderRequest.purchaseUnits(purchaseUnitRequests);
-        return orderRequest;
-    }
 
 }
