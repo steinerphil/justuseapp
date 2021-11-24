@@ -1,18 +1,17 @@
 package de.justuse.backend.controller;
 
+import com.paypal.orders.Order;
 import de.justuse.backend.model.OrderDTO;
 import de.justuse.backend.model.PayPalResponseDTO;
 import de.justuse.backend.service.PayPalService;
+import de.justuse.backend.service.api.PayPalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import com.paypal.http.HttpResponse;
-import com.paypal.orders.*;
-import de.justuse.backend.config.PayPalClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/checkout")
@@ -27,9 +26,9 @@ public class PayPalController {
     }
 
     @PostMapping("/order")
-    public Order createOrder(@RequestBody OrderDTO paypalRequest) throws IOException {
+    public PayPalResponseDTO createOrder(@RequestBody OrderDTO paypalRequest) throws IOException {
 
-       return payPalService.createOrder(true, paypalRequest).result();
+       return payPalService.createOrder(paypalRequest);
     }
 
 
