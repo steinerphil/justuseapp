@@ -17,12 +17,11 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
+
     @ExceptionHandler(HttpServerErrorException.class)
     public ResponseEntity<ApiError> handleInternalServerErrorException(HttpServerErrorException ex) {
-
         log.error("Internal Server Error", ex);
         ApiError apiError = new ApiError("InternalServerError, see exception message for details", ex.getMessage());
-
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
 
     }
