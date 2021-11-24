@@ -26,7 +26,7 @@ public class PayPalController {
     }
 
     @PostMapping("/order")
-    public PayPalResponseDTO createOrder(@RequestBody OrderDTO paypalRequest) throws IOException {
+    public PayPalResponseDTO createOrder(@RequestBody OrderDTO paypalRequest) {
 
        return payPalService.createOrder(paypalRequest);
     }

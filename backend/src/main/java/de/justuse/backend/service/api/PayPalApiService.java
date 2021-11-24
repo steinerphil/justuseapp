@@ -60,7 +60,7 @@ public class PayPalApiService {
         OrderRequest orderRequest = new OrderRequest();
         orderRequest.checkoutPaymentIntent("CAPTURE");
 
-        ApplicationContext applicationContext = new ApplicationContext().brandName("justuseapp").landingPage("LOGIN").returnUrl("http://192.168.178.70:3001");
+        ApplicationContext applicationContext = new ApplicationContext().brandName("justuse.de").landingPage("LOGIN").returnUrl("http://192.168.178.70:3001");
         orderRequest.applicationContext(applicationContext);
 
         List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
@@ -38,6 +39,13 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         log.error("NoSuchElementException was thrown", e);
         ApiError apiError = new ApiError("element not found.", e.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ApiError> handleIOException(IOException e){
+        log.error("IOException was thrown", e);
+        ApiError apiError = new ApiError("bad request.", e.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
 }
