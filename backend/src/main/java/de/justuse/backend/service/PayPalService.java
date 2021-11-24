@@ -22,9 +22,16 @@ public class PayPalService {
         this.payPalResponseMapper = payPalResponseMapper;
     }
 
-    public PayPalResponseDTO createOrder(OrderDTO orderDTO) throws IOException {
+    public PayPalResponseDTO createOrder(OrderDTO orderDTO) {
         //set debug to true to print response data
-        HttpResponse<Order> createdOrder = payPalApiService.createOrder(false, orderDTO);
-        return payPalResponseMapper.mapResponse(createdOrder);
+        try {
+            HttpResponse<Order> createdOrder = payPalApiService.createOrder(false, orderDTO);
+            if (createdOrder.statusCode() == 201) {
+                return payPalResponseMapper.mapResponse(createdOrder);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new PayPalResponseDTO();
     }
 }
