@@ -4,18 +4,17 @@ import com.paypal.http.HttpResponse;
 import com.paypal.orders.LinkDescription;
 import com.paypal.orders.Order;
 import de.justuse.backend.model.Links;
-import de.justuse.backend.model.PayPalResponseDTO;
+import de.justuse.backend.model.PayPalCreateResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PayPalResponseMapper {
+public class PayPalCreateOrderMapper {
 
-    public PayPalResponseDTO mapResponse(HttpResponse<Order> payPalResponse) {
+    public PayPalCreateResponseDTO mapResponse(HttpResponse<Order> payPalResponse) {
         List<Links> links = new ArrayList<>();
-
         for (LinkDescription linkDescription : payPalResponse.result().links()) {
             Links link = new Links(
                     linkDescription.href(),
@@ -24,7 +23,7 @@ public class PayPalResponseMapper {
             );
             links.add(link);
         }
-        return PayPalResponseDTO.builder()
+        return PayPalCreateResponseDTO.builder()
                 .id(payPalResponse.result().id())
                 .status(payPalResponse.result().status())
                 .links(links)

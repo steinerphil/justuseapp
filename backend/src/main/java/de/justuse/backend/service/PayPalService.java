@@ -3,10 +3,10 @@ package de.justuse.backend.service;
 import com.paypal.http.HttpResponse;
 import com.paypal.orders.Order;
 import de.justuse.backend.model.OrderDTO;
-import de.justuse.backend.model.PayPalResponseDTO;
+import de.justuse.backend.model.PayPalCaptureResponseDTO;
+import de.justuse.backend.model.PayPalCreateResponseDTO;
 import de.justuse.backend.service.api.PayPalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,32 +15,38 @@ import java.io.IOException;
 public class PayPalService {
 
     private final PayPalApiService payPalApiService;
-    private final PayPalResponseMapper payPalResponseMapper;
+    private final PayPalCreateOrderMapper createOrderMapper;
+    private final PayPalCaptureOrderMapper captureOrderMapper;
 
     @Autowired
-    public PayPalService(PayPalApiService payPalApiService, PayPalResponseMapper payPalResponseMapper) {
+    public PayPalService(PayPalApiService payPalApiService, PayPalCreateOrderMapper payPalCreateOrderMapper, PayPalCaptureOrderMapper captureOrderMapper) {
         this.payPalApiService = payPalApiService;
-        this.payPalResponseMapper = payPalResponseMapper;
+        this.createOrderMapper = payPalCreateOrderMapper;
+        this.captureOrderMapper = captureOrderMapper;
     }
 
-    public PayPalResponseDTO createOrder(OrderDTO orderDTO) {
+    public PayPalCreateResponseDTO createOrder(OrderDTO orderDTO) {
         //set debug to true to print response data
         try {
             HttpResponse<Order> createdOrder = payPalApiService.createOrder(false, orderDTO);
             if (createdOrder.statusCode() == 201) {
-                return payPalResponseMapper.mapResponse(createdOrder);
+                return createOrderMapper.mapResponse(createdOrder);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new PayPalResponseDTO();
+        return new PayPalCreateResponseDTO();
     }
 
-    public void captureOrder(String orderId){
+    public PayPalCaptureResponseDTO captureOrder(String orderId){
         try {
             HttpResponse<Order> captureOrder = payPalApiService.captureOrder(true, orderId);
+            if (captureOrder.statusCode() == 201) {
+                return captureOrderMapper.mapResponse(captureOrder);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return new PayPalCaptureResponseDTO();
     }
 }

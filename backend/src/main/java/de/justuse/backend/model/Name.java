@@ -1,19 +1,19 @@
 package de.justuse.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PayPalResponseDTO {
+public class Name {
 
-    private String id;
-    private String status;
-    private List<Links> links;
+    private String surname;
+
+    @JsonProperty("given_name")
+    private String givenName;
 }
