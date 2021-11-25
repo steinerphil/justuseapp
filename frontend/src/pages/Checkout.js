@@ -9,9 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import axios from "axios";
-import ReactDOM from "react-dom"
-
-const PayPalButton = window.paypal.Buttons.driver("react", {React, ReactDOM});
+import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js";
 
 
 export default function Checkout() {
@@ -91,34 +89,6 @@ export default function Checkout() {
         }
     }
 
-    const createOrder = () => {
-
-        const requestBody = JSON.stringify({
-            intent: "CAPTURE",
-            reference_id: 1, //TODO durch fortlaufenden Zähler ersetzen
-            purchase_units: [{
-                amount: {
-                    currency_code: "EUR",
-                    value: product.price,
-                },
-                description: product.title,
-            }],
-        })
-
-        return axios.post("/api/checkout/order", requestBody, requestHeaders)
-            .then(res => res.data)
-            .then(data => {
-                return data.orderId
-            })
-            .catch(err => console.log(err))
-    };
-
-    const onApprove = (data) => {
-        return axios.post(`/api/checkout/approve/${data.orderID}`, requestHeaders )
-            .then(res => res.data)
-            .then(data => console.log(data));
-    };
-
     return (
         <Container>
             {renderNavigation()}
@@ -145,10 +115,39 @@ export default function Checkout() {
                     <CheckoutButton variant="contained" type="submit">
                         Jetzt Mieten.
                     </CheckoutButton>
-                    <PayPalButton
-                        createOrder={() => createOrder()}
-                        onApprove={(data) => onApprove(data)}
-                    />
+                    <PayPalScriptProvider options={{
+                        "client-id": "AZGV7ZChKfhMF6KYPg0zsZC_NakicLcxi2Nzh1G3Rw0lqdO0_2oPld2QPXKw0VgLfa44-8Tgd6rUDMKw",
+                        currency: "EUR",
+                        components: "buttons",
+                    }}>
+                        <PayPalButtons
+                            style={{layout: "vertical", color: "gold" , shape: "pill", label: "paypal"}}
+                            createOrder={(data, actions) => {
+                                const requestBody = JSON.stringify({
+                                    intent: "CAPTURE",
+                                    reference_id: 1, //TODO durch fortlaufenden Zähler ersetzen
+                                    purchase_units: [{
+                                        amount: {
+                                            currency_code: "EUR",
+                                            value: product.price,
+                                        },
+                                        description: product.title,
+                                    }],
+                                })
+                                return axios.post("/api/checkout/order", requestBody, requestHeaders)
+                                    .then(res => res.data)
+                                    .then(data => {
+                                        return data.orderId
+                                    })
+                                    .catch(err => console.log(err))
+                            }}
+                            onApprove={(data) => {
+                                return axios.post(`/api/checkout/approve/${data.orderID}`, requestHeaders)
+                                    .then(res => res.data)
+                                    .catch(err => console.log(err));
+                            }}
+                        />
+                    </PayPalScriptProvider>
                 </form>
             </Wrapper>
         </Container>
