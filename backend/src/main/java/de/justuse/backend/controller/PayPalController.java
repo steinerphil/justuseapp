@@ -1,6 +1,7 @@
 package de.justuse.backend.controller;
 
 import de.justuse.backend.model.OrderDTO;
+import de.justuse.backend.model.PayPalApproveLinkDTO;
 import de.justuse.backend.model.PayPalCaptureResponseDTO;
 import de.justuse.backend.model.PayPalCreateResponseDTO;
 import de.justuse.backend.service.PayPalService;
@@ -20,7 +21,7 @@ public class PayPalController {
     }
 
     @PostMapping("/order")
-    public PayPalCreateResponseDTO createOrder(@RequestBody OrderDTO paypalRequest) {
+    public PayPalApproveLinkDTO createOrder(@RequestBody OrderDTO paypalRequest) {
        return payPalService.createOrder(paypalRequest);
     }
 

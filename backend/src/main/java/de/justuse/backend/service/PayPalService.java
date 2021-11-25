@@ -2,9 +2,7 @@ package de.justuse.backend.service;
 
 import com.paypal.http.HttpResponse;
 import com.paypal.orders.Order;
-import de.justuse.backend.model.OrderDTO;
-import de.justuse.backend.model.PayPalCaptureResponseDTO;
-import de.justuse.backend.model.PayPalCreateResponseDTO;
+import de.justuse.backend.model.*;
 import de.justuse.backend.repository.OrderDAO;
 import de.justuse.backend.service.api.PayPalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +26,24 @@ public class PayPalService {
         this.successfulOrderRepo = successfulOrderRepo;
     }
 
-    public PayPalCreateResponseDTO createOrder(OrderDTO orderDTO) {
+    public PayPalApproveLinkDTO createOrder(OrderDTO orderDTO) {
         try {
             //set debug to true to print response data
             HttpResponse<Order> createdOrder = payPalApiService.createOrder(false, orderDTO);
+
             if (createdOrder.statusCode() == 201) {
-                return createOrderMapper.mapResponse(createdOrder);
+                PayPalCreateResponseDTO orderToApprove = createOrderMapper.mapResponse(createdOrder);
+
+                for(Links link: orderToApprove.getLinks()){
+                    if(link.getRel().equals("approve")){
+                        return new PayPalApproveLinkDTO(link.getHref(), orderToApprove.getId());
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new PayPalCreateResponseDTO();
+        return new PayPalApproveLinkDTO();
     }
 
     public PayPalCaptureResponseDTO captureOrder(String orderId){

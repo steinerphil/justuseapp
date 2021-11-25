@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import useProducts from "../hooks/useProducts";
 import {useHistory, useParams} from "react-router-dom";
 import styled from "styled-components/macro";
@@ -9,9 +9,12 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import axios from "axios";
+import ReactDOM from "react-dom"
+
+const PayPalButton = window.paypal.Buttons.driver("react", {React, ReactDOM});
+
 
 export default function Checkout() {
-
     const {renderNavigation, getById} = useProducts();
     const history = useHistory()
     const {actualProductId} = useParams();
@@ -31,6 +34,12 @@ export default function Checkout() {
     const handleLocation = product.location.substr(0, 1) + product.location.substr(1, product.location.length).toLowerCase()
     const [paymentMethod, setPaymentMethod] = useState("paypal")
     const [date, setDate] = useState({current: '', return: '', collection: ''})
+    const requestHeaders = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+        },
+    }
 
     useEffect(() => {
         getById(actualProductId)
@@ -45,7 +54,6 @@ export default function Checkout() {
         getCollectionDate()
         // eslint-disable-next-line
     }, [date.return])
-
 
     function getReturnDate(cycle) {
         axios.get(`/date/return/${cycle}`)
@@ -83,6 +91,34 @@ export default function Checkout() {
         }
     }
 
+    const createOrder = () => {
+
+        const requestBody = JSON.stringify({
+            intent: "CAPTURE",
+            reference_id: 1, //TODO durch fortlaufenden Zähler ersetzen
+            purchase_units: [{
+                amount: {
+                    currency_code: "EUR",
+                    value: product.price,
+                },
+                description: product.title,
+            }],
+        })
+
+        return axios.post("/api/checkout/order", requestBody, requestHeaders)
+            .then(res => res.data)
+            .then(data => {
+                return data.orderId
+            })
+            .catch(err => console.log(err))
+    };
+
+    const onApprove = (data) => {
+        return axios.post(`/api/checkout/approve/${data.orderID}`, requestHeaders )
+            .then(res => res.data)
+            .then(data => console.log(data));
+    };
+
     return (
         <Container>
             {renderNavigation()}
@@ -109,6 +145,10 @@ export default function Checkout() {
                     <CheckoutButton variant="contained" type="submit">
                         Jetzt Mieten.
                     </CheckoutButton>
+                    <PayPalButton
+                        createOrder={() => createOrder()}
+                        onApprove={(data) => onApprove(data)}
+                    />
                 </form>
             </Wrapper>
         </Container>
