@@ -6,6 +6,7 @@ import de.justuse.backend.model.OrderDTO;
 import de.justuse.backend.model.PayPalResponseDTO;
 import de.justuse.backend.service.api.PayPalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -33,5 +34,13 @@ public class PayPalService {
             e.printStackTrace();
         }
         return new PayPalResponseDTO();
+    }
+
+    public void captureOrder(String orderId){
+        try {
+            HttpResponse<Order> captureOrder = payPalApiService.captureOrder(true, orderId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
