@@ -1,6 +1,7 @@
 package de.justuse.backend.controller;
 
 import de.justuse.backend.model.OrderDTO;
+import de.justuse.backend.model.PayPalCaptureResponseDTO;
 import de.justuse.backend.model.PayPalCreateResponseDTO;
 import de.justuse.backend.service.PayPalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class PayPalController {
     }
 
     @PostMapping("/approve/{orderId}")
-    public void approveOrder(@PathVariable String orderId){
-        payPalService.captureOrder(orderId);
+    public PayPalCaptureResponseDTO approveOrder(@PathVariable String orderId){
+        return payPalService.captureOrder(orderId);
     }
 
 
