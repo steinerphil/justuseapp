@@ -29,8 +29,8 @@ public class PayPalService {
     }
 
     public PayPalCreateResponseDTO createOrder(OrderDTO orderDTO) {
-        //set debug to true to print response data
         try {
+            //set debug to true to print response data
             HttpResponse<Order> createdOrder = payPalApiService.createOrder(false, orderDTO);
             if (createdOrder.statusCode() == 201) {
                 return createOrderMapper.mapResponse(createdOrder);
@@ -43,7 +43,8 @@ public class PayPalService {
 
     public PayPalCaptureResponseDTO captureOrder(String orderId){
         try {
-            HttpResponse<Order> captureOrder = payPalApiService.captureOrder(true, orderId);
+            //set debug to true to print response data
+            HttpResponse<Order> captureOrder = payPalApiService.captureOrder(false, orderId);
             if (captureOrder.statusCode() == 201) {
                 PayPalCaptureResponseDTO successfulOrder = captureOrderMapper.mapResponse(captureOrder);
                return successfulOrderRepo.save(successfulOrder);
