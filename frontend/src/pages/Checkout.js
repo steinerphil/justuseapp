@@ -2,11 +2,6 @@ import React, {useEffect, useState} from "react";
 import useProducts from "../hooks/useProducts";
 import {useHistory, useParams} from "react-router-dom";
 import styled from "styled-components/macro";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import Button from "@mui/material/Button";
 import axios from "axios";
 import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js";
@@ -30,7 +25,6 @@ export default function Checkout() {
         }
     })
     const handleLocation = product.location.substr(0, 1) + product.location.substr(1, product.location.length).toLowerCase()
-    const [paymentMethod, setPaymentMethod] = useState("paypal")
     const [date, setDate] = useState({current: '', return: '', collection: ''})
     const requestHeaders = {
         headers: {
@@ -70,50 +64,26 @@ export default function Checkout() {
 
     }
 
-    function handleRadioButton(event) {
-        setPaymentMethod(event.target.value)
-    }
-
     function handleSubmit(event) {
         event.preventDefault()
-        switch (paymentMethod) {
-            case "paypal":
-                console.log("Paypal checkout")
-                break;
-            case "collection":
-                alert(`Du kannst dir deinen gemieteten Artikel bis zum ${date.collection} bei uns am Standort ${handleLocation} abholen. Bis bald!`)
-                history.push("/products/overview")
-                break;
-            default:
-                return null
-        }
+        alert(`Super! Du kannst dir deinen gemieteten Artikel bis zum ${date.collection} bei uns am Standort ${handleLocation} abholen. Bis bald!`)
+        history.push("/products/overview")
     }
 
     return (
         <Container>
             {renderNavigation()}
             <Wrapper>
-                <p>Du möchstest</p>
-                <p>{product.title}</p>
-                <p>bis zum</p> {date.return} <p>mieten.</p>
-                <p>Gesamtbetrag: {product.price}€</p>
+                <Textbox>
+                    <p>Du möchstest den Artikel:</p>
+                    <p>- {product.title} -</p>
+                    <p>bis zum</p> {date.return} <p>mieten.</p>
+                    <p>Gesamtbetrag: {product.price}€</p>
+                </Textbox>
 
-                <form onSubmit={handleSubmit}>
-
-                    <FormControl component="fieldset">
-                        <FormLabel component="legend">Bezahlen mit:</FormLabel>
-                        <RadioGroup
-                            aria-label="bezahlmethoden"
-                            name="radio-buttons-group"
-                            value={paymentMethod}
-                            onChange={handleRadioButton}
-                        >
-                            <FormControlLabel value="paypal" control={<Radio/>} label="PayPal"/>
-                            <FormControlLabel value="collection" control={<Radio/>} label="bei Abholung"/>
-                        </RadioGroup>
-                    </FormControl>
+                <CheckoutForm onSubmit={handleSubmit}>
                     <CheckoutButton variant="contained" type="submit">
-                        Jetzt Mieten.
+                        Bei Abholung bezahlen
                     </CheckoutButton>
                     <PayPalScriptProvider options={{
                         "client-id": "AZGV7ZChKfhMF6KYPg0zsZC_NakicLcxi2Nzh1G3Rw0lqdO0_2oPld2QPXKw0VgLfa44-8Tgd6rUDMKw",
@@ -121,7 +91,7 @@ export default function Checkout() {
                         components: "buttons",
                     }}>
                         <PayPalButtons
-                            style={{layout: "vertical", color: "gold" , shape: "pill", label: "paypal"}}
+                            style={{layout: "vertical", color: "gold", shape: "pill", label: "paypal"}}
                             createOrder={(data, actions) => {
                                 const requestBody = JSON.stringify({
                                     intent: "CAPTURE",
@@ -148,7 +118,7 @@ export default function Checkout() {
                             }}
                         />
                     </PayPalScriptProvider>
-                </form>
+                </CheckoutForm>
             </Wrapper>
         </Container>
 
@@ -181,15 +151,35 @@ const Wrapper = styled.div`
 
 const CheckoutButton = styled(Button)`
   && {
+    text-transform: none;
     color: white;
     background-color: #F05454;
     border-color: #F05454;
-    margin: auto;
-    height: 50px;
+    height: 45px;
+    width: 100%;
+    border-radius: 50px;
+    margin-bottom: 35px;
+    font-size: medium;
+    padding: 0;
+
+    @media (max-width: 835px) {
+      height: 35px;
+      font-size: small;
+    }
+
 
     :hover {
       border-color: #F57575FF;
       background-color: #F57575FF;
     }
   }
+`
+
+const CheckoutForm = styled.form`
+  width: 50%;
+  margin: 7% auto;
+  min-width: 200px;
+`
+const Textbox = styled.div`
+  margin: 5% 5% 0 5%;
 `
