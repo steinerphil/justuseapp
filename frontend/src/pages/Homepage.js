@@ -191,7 +191,7 @@ const SearchButton = styled(Button)`
 
 const SecondSection = styled.section`
   background-color: #DDDDDD;
-  padding: 7%;
+  padding: 7% 7% 25% 7%;
 `
 
 const SecondHeading = styled.div`
