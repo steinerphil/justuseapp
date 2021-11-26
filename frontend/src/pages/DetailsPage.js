@@ -48,22 +48,23 @@ export default function DetailsPage() {
             <Wrapper>
                 <ContentOne>
                     <FirstContentWrapper>
+                        <BackButton variant="text" startIcon={<ArrowBackTwoToneIcon/>} onClick={() => history.goBack()}>
+                            zur Suche
+                        </BackButton>
                         <StyledImg src={product.image.url} alt={product.title} id={product.image.id} tabIndex="0"/>
                         <SectionOne>
                             <Headline>{product.title}</Headline>
                             <PDescription>{product.description}</PDescription>
                         </SectionOne>
                     </FirstContentWrapper>
-                    <LikeButton startIcon={<ThumbUpTwoToneIcon/>} sx={{color: "#222831"}}>
-                        Zu Favoriten hinzufügen
-                    </LikeButton>
+                    <LikeButton startIcon={<ThumbUpTwoToneIcon/>} sx={{color: "#222831"}}/>
                 </ContentOne>
 
                 <ContentTwo>
                     <SectionTwo>
                         <SecondContentWrapper>
                             <p>Mietdauer:</p>
-                            <FormControl variant="standard" sx={{m: 1, minWidth: 80}}>
+                            <FormControl variant="standard" sx={{m: 1, minWidth: 50}}>
                                 <Select
                                     sx={{color: "#222831", backgroundColor: "#DDDDDD", padding: "0 0 0 10%"}}
                                     labelId="simple-select-autowidth-label"
@@ -83,15 +84,11 @@ export default function DetailsPage() {
                     </SectionTwo>
 
                     <PriceTag>{product.price}€</PriceTag>
+                </ContentTwo>
+                <ContentThree>
                     <CheckoutButton variant="contained" onClick={handleCheckout}>
                         Jetzt Mieten.
                     </CheckoutButton>
-                </ContentTwo>
-                <ContentThree>
-                    <BackButton variant="outlined" startIcon={<ArrowBackTwoToneIcon/>} onClick={() => history.goBack()}>
-                        zur Suche
-                    </BackButton>
-
                 </ContentThree>
             </Wrapper>
 
@@ -180,7 +177,6 @@ const SectionTwo = styled.div`
 const ContentThree = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 5%;
   justify-content: center;
 `
 
@@ -210,7 +206,6 @@ const Headline = styled.p`
 const LikeButton = styled(Button)`
   && {
     text-transform: none;
-    width: 50%;
 
     @media (max-width: 500px) {
       align-self: flex-end;
@@ -235,7 +230,8 @@ const CheckoutButton = styled(Button)`
     background-color: #F05454;
     border-color: #F05454;
     margin: auto;
-    height: 50px;
+    height: 45px;
+    width: 70%;
 
     :hover {
       border-color: #F57575FF;
@@ -249,7 +245,9 @@ const BackButton = styled(Button)`
     text-transform: none;
     color: #878787;
     border-color: #878787;
-    margin-left: 3%;
+    margin: 0 0 4% 3%;
+    width: 40%;
+    align-self: flex-end;
 
     :hover {
       border-color: #9E9D9DFF;

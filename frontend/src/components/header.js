@@ -41,10 +41,10 @@ function Header() {
                                   onClick={() => {
                                       logout()
                                   }}>Logout</LogoutButton>
-                    <IconButton aria-label="edit" sx={{color: '#F05454'}}
+                    <StyledIconButton aria-label="edit" sx={{color: '#F05454'}}
                                 onClick={() => history.push("/administration")}>
                         <SettingsTwoToneIcon/>
-                    </IconButton>
+                    </StyledIconButton>
                 </ButtonContainer>
             )
         } else {
@@ -54,10 +54,10 @@ function Header() {
                                   onClick={() => {
                                       logout()
                                   }}>Logout</LogoutButton>
-                    <IconButton aria-label="edit" sx={{color: '#F05454'}}
+                    <StyledIconButton aria-label="edit" sx={{color: '#F05454'}}
                                 onClick={() => history.push("/administration")}>
                         <SettingsTwoToneIcon/>
-                    </IconButton>
+                    </StyledIconButton>
                 </ButtonContainer>
             )
         }
@@ -116,10 +116,11 @@ const LoginButton = styled(Button)`
       border-color: #F57575FF;
       color: #F57575FF;
     }
+
     @media (max-width: 500px) {
       border: 0;
       :hover {
-        border:0;
+        border: 0;
       }
     }
   }
@@ -144,7 +145,7 @@ const WhiteButton = styled(Button)`
     @media (max-width: 500px) {
       border: 0;
       :hover {
-        border:0;
+        border: 0;
       }
     }
   }
@@ -165,7 +166,7 @@ const LogoutButton = styled(Button)`
     @media (max-width: 500px) {
       border: 0;
       :hover {
-        border:0;
+        border: 0;
       }
     }
   }
@@ -174,6 +175,14 @@ const LogoutButton = styled(Button)`
 const ButtonContainer = styled.div`
   margin-left: auto;
   display: flex;
+`
+
+const StyledIconButton = styled(IconButton)`
+  && {
+  @media(max-width: 430px){
+    display: none;
+  }
+  }
 `
 
 

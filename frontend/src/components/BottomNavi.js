@@ -2,29 +2,39 @@ import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
-import {useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
+import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
+import {useHistory} from "react-router-dom";
 
 
 export default function BottomNavi() {
-    const [value, setValue] = useState(0);
+    const history = useHistory()
 
+    function handleItemClick(newValue) {
+        switch (newValue){
+            case 0: return history.push("/products/overview");
+            case 1: break;
+            case 2: break;
+            case 3: return  history.push("/administration")
+            default: return null;
+        }
+    }
 
     function renderNavigation() {
         if (localStorage.getItem("token")) {
             return (
                 <BottomNavigation
                     showLabels
-                    value={value}
                     onChange={(event, newValue) => {
-                        setValue(newValue);
+                        handleItemClick(newValue);
                     }}
                 >
                     <BottomNavigationAction label="Suchen" icon={<SearchIcon/>}/>
                     <BottomNavigationAction label="Favoriten" icon={<ThumbUpTwoToneIcon/>}/>
                     <BottomNavigationAction label="Gemietet" icon={<AccessTimeTwoToneIcon/>}/>
+                    <BottomNavigationAction label="Settings" icon={<SettingsTwoToneIcon/>}/>
                 </BottomNavigation>
             )
         }
