@@ -39,7 +39,6 @@ export default function ProductGallery({products}) {
         gridTemplateColumns: renderImageList().gridTemplateColumns,
         gap: renderImageList().gap,
         padding: renderImageList().padding,
-        height: "auto",
     }} sx={{
         width: "auto",
         height: listHeight(),
