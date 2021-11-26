@@ -5,6 +5,7 @@ import styled from "styled-components/macro";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js";
+import {CircularProgress} from "@mui/material";
 
 
 export default function Checkout() {
@@ -90,33 +91,36 @@ export default function Checkout() {
                         currency: "EUR",
                         components: "buttons",
                     }}>
-                        <PayPalButtons
-                            style={{layout: "vertical", color: "gold", shape: "pill", label: "paypal"}}
-                            createOrder={(data, actions) => {
-                                const requestBody = JSON.stringify({
-                                    intent: "CAPTURE",
-                                    reference_id: 1, //TODO durch fortlaufenden Zähler ersetzen
-                                    purchase_units: [{
-                                        amount: {
-                                            currency_code: "EUR",
-                                            value: product.price,
-                                        },
-                                        description: product.title,
-                                    }],
-                                })
-                                return axios.post("/api/checkout/order", requestBody, requestHeaders)
-                                    .then(res => res.data)
-                                    .then(data => {
-                                        return data.orderId
-                                    })
-                                    .catch(err => console.log(err))
-                            }}
-                            onApprove={(data) => {
-                                return axios.post(`/api/checkout/approve/${data.orderID}`, requestHeaders)
-                                    .then(res => res.data)
-                                    .catch(err => console.log(err));
-                            }}
-                        />
+                        {product.title !== '' ?
+                            (<PayPalButtons
+                                style={{layout: "vertical", color: "gold", shape: "pill", label: "paypal"}}
+                                createOrder={() => {
+                                    const requestBody = {
+                                        intent: "CAPTURE",
+                                        purchase_units: [{
+                                            amount: {
+                                                currency_code: "EUR",
+                                                value: product.price,
+                                            },
+                                            description: product.title,
+                                        }],
+                                    }
+                                    return axios.post("/api/checkout/order", requestBody, requestHeaders)
+                                        .then(res => res.data)
+                                        .then(data => {
+                                            return data.orderId
+                                        })
+                                        .catch(err => console.log(err))
+                                }}
+                                onApprove={(data) => {
+                                    return axios.post(`/api/checkout/approve/${data.orderID}`, requestHeaders)
+                                        .then(res => res.data)
+                                        .catch(err => console.log(err));
+                                }}
+                            />)
+
+                            : <CircularProgress color="grey"/>
+                        }
                     </PayPalScriptProvider>
                 </CheckoutForm>
             </Wrapper>
@@ -179,6 +183,7 @@ const CheckoutForm = styled.form`
   width: 50%;
   margin: 7% auto;
   min-width: 200px;
+  text-align: center;
 `
 const Textbox = styled.div`
   margin: 5% 5% 0 5%;

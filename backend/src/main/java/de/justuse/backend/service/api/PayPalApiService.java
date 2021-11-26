@@ -64,9 +64,11 @@ public class PayPalApiService {
         orderRequest.applicationContext(applicationContext);
 
         List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
-        PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest().referenceId(payPalRequest.getReferenceId())
+        PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest()
                 .description(payPalRequest.getPurchaseUnits()[0].getDescription())
-                .amountWithBreakdown(new AmountWithBreakdown().currencyCode("EUR").value(payPalRequest.getPurchaseUnits()[0].getAmount().getValue()));
+                .amountWithBreakdown(new AmountWithBreakdown()
+                        .currencyCode("EUR")
+                        .value(payPalRequest.getPurchaseUnits()[0].getAmount().getValue()));
         purchaseUnitRequests.add(purchaseUnitRequest);
         orderRequest.purchaseUnits(purchaseUnitRequests);
         return orderRequest;

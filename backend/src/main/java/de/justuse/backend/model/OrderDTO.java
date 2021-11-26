@@ -14,10 +14,6 @@ public class OrderDTO {
 
 
     private String intent;
-
-    @JsonProperty("reference_id")
-    private String referenceId;
-
     @JsonProperty("purchase_units")
     private PurchaseUnits[] purchaseUnits;
 }
